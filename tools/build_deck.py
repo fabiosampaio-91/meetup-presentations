@@ -720,7 +720,7 @@ def screenshot_web(html: Path, out_dir: Path, n: int):
                            capture_output=True, timeout=90)
         except subprocess.TimeoutExpired:
             failed.append(i)
-    for size in ("1440x800", "900x1100", "390x844"):        # responsive check: laptop, portrait, phone
+    for size in ("1440x800", "900x1100", "500x900"):        # responsive check: laptop, portrait, phone (headless Chrome min width is 500)
         try:
             subprocess.run([str(CHROME), "--headless=new", "--disable-gpu", "--hide-scrollbars", f"--window-size={size.replace('x', ',')}",
                             "--virtual-time-budget=4000", f"--screenshot={out_dir / f'web-fit-{size}.png'}", f"{html.as_uri()}#1"],

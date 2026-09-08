@@ -110,7 +110,7 @@ banner from meetup.com) there too. `slug` = `YYYY-MM-DD-<kebab-name>`.
      could not embed the brand font, prints the PDF from the web deck with headless Chrome instead
      (`engine=chrome` in the output) and keeps the LibreOffice render as `preview/pptx-XX.png`;
    - renders `preview/slide-XX.png` from the PDF, `preview/web-XX.png` (each slide at 1600x900) and
-     `preview/web-fit-<size>.png` (slide 1 at laptop, portrait and phone window sizes) with headless Chrome;
+     `preview/web-fit-<size>.png` (slide 1 at laptop, portrait and phone window sizes; headless Chrome cannot go below 500px wide) with headless Chrome;
    - copies the web deck + PDF into `docs/<slug>/` and regenerates `docs/index.html`.
    Dependencies: `python-pptx qrcode pillow python-docx pymupdf opencv-python-headless`, LibreOffice
    (`soffice`), Google Chrome (optional screenshots).
