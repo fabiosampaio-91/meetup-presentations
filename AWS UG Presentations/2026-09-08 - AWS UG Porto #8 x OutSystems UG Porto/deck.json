@@ -1,0 +1,240 @@
+{
+  "slug": "2026-09-08-aws-ug-porto-8-x-outsystems-ug-porto",
+  "community": "AWS User Group Porto",
+  "title": "#8 AWS UG Porto x OutSystems UG Porto",
+  "description": "Deck for the #8 AWS User Group Porto meetup, a joint edition with OutSystems User Group Porto, 8 September 2026 at Vertical Dom Henrique (VA Coworking), Porto.",
+  "date_iso": "2026-09-08",
+  "edition_label": "#8",
+  "footer": "AWS User Group Porto  ×  OutSystems User Group Porto   ·   #8   ·   8 September 2026",
+  "community_logo": "assets/logos/aws-ug-porto.jpg",
+  "brand": {
+    "font": "Poppins",
+    "background": "assets/background.jpg",
+    "shadow_offset": 0.09,
+    "colors": {
+      "purple": "#7B5AC2",
+      "navy": "#201E37",
+      "deep": "#45307F",
+      "grey": "#E5EAEB",
+      "white": "#FFFFFF",
+      "black": "#000000",
+      "teal": "#2EEEC3",
+      "muted_on_light": "#3A3A4A",
+      "muted_on_dark": "#EDE9F7"
+    }
+  },
+  "cover": {
+    "logos": [
+      {
+        "name": "OutSystems User Groups",
+        "file": "assets/logos/outsystems-user-groups.png"
+      },
+      {
+        "name": "VA Coworking",
+        "file": "assets/logos/va-coworking.png"
+      },
+      {
+        "name": "synvert xgeeks",
+        "file": "assets/logos/synvert-xgeeks.png"
+      }
+    ],
+    "title_line_1": "AWS UG Porto x",
+    "title_line_2": "OutSystems UG Porto",
+    "date_line": "Sep 8th  |  6:30 PM  |  Porto",
+    "venue_line": "Vertical Dom Henrique · VA Coworking · R. do Bolhão, Porto"
+  },
+  "about": {
+    "title": "About AWS User Group Porto",
+    "tagline": "Your community for AWS & Cloud Technology in Porto",
+    "quote": "“Two communities that rarely share a stage, together for one evening.”",
+    "bullets": [
+      "Official AWS User Group in Porto, founded in 2016",
+      "391 members on Meetup and a 4.81★ average event rating",
+      "Cloud computing, DevOps, AI/ML, serverless, security and beyond",
+      "Meetups, workshops and hands-on sessions on AWS best practices",
+      "#8 edition: our first joint meetup with OutSystems User Group Porto"
+    ],
+    "join_url": "https://www.meetup.com/aws-porto-user-group/",
+    "join_label": "Join us on Meetup"
+  },
+  "organizers": {
+    "title": "Our Leadership Team",
+    "host_badge": "Hosting tonight",
+    "people": [
+      {
+        "name": "Fábio Sampaio",
+        "role": "Organizer",
+        "hosting": true
+      },
+      {
+        "name": "Gabriel Alves",
+        "role": "Co-organizer",
+        "hosting": true
+      },
+      {
+        "name": "Luiz Rodrigues",
+        "role": "Event organizer",
+        "hosting": true
+      },
+      {
+        "name": "Tiago Rodrigues",
+        "role": "Co-organizer"
+      },
+      {
+        "name": "Ivan Ferreira",
+        "role": "Leadership team"
+      }
+    ],
+    "note": "Come say hi during the break: feedback, talk ideas and venue offers are always welcome."
+  },
+  "speakers_title": "Speakers & Talks",
+  "speakers": [
+    {
+      "name": "Ricardo Pereira",
+      "role": "OutSystems Factory Manager | Tech Lead",
+      "talk": "What is technical management in OutSystems",
+      "abstract": "Faster development also means failing faster. Keeping an OutSystems ecosystem healthy, with sustainable technical debt and room to scale, takes deliberate technical leadership: implementation guidelines grounded in best practices, centers of excellence, and continuous training for everyone contributing to the ecosystem.",
+      "photo": "assets/photos/ricardo-pereira.jpg"
+    },
+    {
+      "name": "Rafael Arruda",
+      "role": "Data Engineer at Best in Bi Solutions",
+      "talk": "Building a Modern Event-Driven Data Platform with AWS & Snowflake",
+      "abstract": "A real-world architecture for a customer that needed fresh data every 2 to 5 minutes: an event-driven flow where the only scheduled component is the extraction from the source API. EventBridge, Lambda, Amazon S3 and SNS integrate with Snowflake through Snowpipe Streaming and Dynamic Tables, with the decisions, trade-offs and lessons learned in production.",
+      "photo": "assets/photos/rafael-arruda.jpg"
+    }
+  ],
+  "agenda": {
+    "title": "Agenda",
+    "items": [
+      {
+        "time": "18:30",
+        "what": "Check-in & Networking"
+      },
+      {
+        "time": "19:00",
+        "what": "Welcome & Intros",
+        "detail": "AWS User Group Porto, OutSystems User Group Porto & Partners"
+      },
+      {
+        "time": "Talk 1",
+        "what": "What is technical management in OutSystems",
+        "detail": "Ricardo Pereira · OutSystems Factory Manager | Tech Lead"
+      },
+      {
+        "time": "Talk 2",
+        "what": "Building a Modern Event-Driven Data Platform with AWS & Snowflake",
+        "detail": "Rafael Arruda · Data Engineer at Best in Bi Solutions"
+      },
+      {
+        "time": "20:30+",
+        "what": "Catering, drinks & community networking",
+        "detail": "KCD Porto ticket raffle: the winner is drawn at the end of the meetup"
+      }
+    ]
+  },
+  "sponsors_slide": {
+    "title": "Sponsors & Meetup Partner",
+    "sponsors_label": "Sponsors",
+    "sponsors": [
+      {
+        "name": "VA Coworking · Vertical Dom Henrique, Porto",
+        "kind": "Venue sponsor",
+        "logo": "assets/logos/va-coworking.png"
+      },
+      {
+        "name": "synvert xgeeks · continuous support of the community",
+        "kind": "Main sponsor",
+        "logo": "assets/logos/synvert-xgeeks.png"
+      }
+    ],
+    "partner_label": "Meetup partner",
+    "partner": {
+      "name": "OutSystems User Group Porto",
+      "kind": "Meetup partner",
+      "logo": "assets/logos/outsystems-user-groups.png"
+    },
+    "thanks": "A huge thank you to VA Coworking for hosting us, synvert xgeeks for the continuous support, and to OutSystems User Group Porto for making this joint edition happen!"
+  },
+  "kcd": {
+    "title": "KCD Porto × DevOps Days Portugal",
+    "logo": "assets/logos/kcd-porto-devopsdays.jpg",
+    "event_name": "KCD Porto 2026 | Collab with DevOps Days Portugal",
+    "when": "19–20 November 2026",
+    "where": "SuperBock Arena – Pavilhão Rosa Mota, Porto",
+    "blurb": "The biggest Kubernetes and Cloud Native event ever organized in Portugal: two days, 500+ attendees, keynotes, technical sessions and networking.",
+    "keynotes_label": "Confirmed keynotes",
+    "keynotes": [
+      {
+        "name": "Manuel Pais",
+        "role": "Team Topologies Co-Author",
+        "photo": "assets/photos/manuel-pais.jpg"
+      },
+      {
+        "name": "Juraci Paixão",
+        "role": "CEO of OllyGarden",
+        "photo": "assets/photos/juraci-paixao.jpg"
+      },
+      {
+        "name": "Mario Fahlandt",
+        "role": "Customer Delivery Architect at Kubermatic",
+        "photo": "assets/photos/mario-fahlandt.jpg"
+      },
+      {
+        "name": "Natanael Copa",
+        "role": "Creator of Alpine Linux · k0s Maintainer",
+        "photo": "assets/photos/natanael-copa.jpg"
+      }
+    ],
+    "agenda_note": "Full agenda released this week",
+    "url": "https://community2.cncf.io/events/details/cncf-kcd-porto-presents-kcd-porto-2026-collab-with-devops-days-portugal/",
+    "qr_label": "Scan for tickets & info",
+    "code_label": "Discount code",
+    "discount_code": "cnpdevopsdiscount",
+    "code_hint": "Use it at checkout on the KCD Porto event page"
+  },
+  "raffle": {
+    "title": "Raffle: win a KCD Porto ticket",
+    "headline": "We are raffling one KCD Porto × DevOps Days Portugal ticket at this meetup.",
+    "instructions": "Scan the QR code, fill in the form, and the winner is drawn at the end of the meetup.",
+    "url": "https://forms.gle/mBZbHRNYxwsuqphm6",
+    "url_label": "forms.gle/mBZbHRNYxwsuqphm6",
+    "qr_label": "Scan to enter the raffle",
+    "qr_size_in": 4.15
+  },
+  "closing": {
+    "title": "Thank you!",
+    "subtitle": "Hope you enjoyed your time with us. See you at KCD Porto × DevOps Days Portugal on 19–20 November!",
+    "follow_label": "Collaborate and follow us",
+    "links": [
+      {
+        "label": "Slack · AWS User Group Portugal",
+        "short": "join.slack.com · awsusergroupportugal",
+        "icon": "assets/icons/slack.png",
+        "qr_name": "slack",
+        "url": "https://join.slack.com/t/awsusergroupportugal/shared_invite/zt-34qevs11z-fd2JqgtBt6EIv7_OoJLCVQ"
+      },
+      {
+        "label": "Meetup · AWS User Group Porto",
+        "short": "meetup.com/aws-porto-user-group",
+        "icon": "assets/icons/meetup.png",
+        "qr_name": "meetup",
+        "url": "https://www.meetup.com/aws-porto-user-group/"
+      },
+      {
+        "label": "LinkedIn · AWS User Group Porto",
+        "short": "linkedin.com/company/aws-user-group-porto",
+        "icon": "assets/icons/linkedin.png",
+        "qr_name": "linkedin",
+        "url": "https://www.linkedin.com/company/aws-user-group-porto/"
+      },
+      {
+        "label": "Call for speakers",
+        "short": "Submit a talk for a future meetup",
+        "icon": "assets/icons/microphone.jpg",
+        "qr_name": "speaker-form",
+        "url": "https://docs.google.com/forms/d/e/1FAIpQLSdO4gOTXEQ8y3-hps9zt37TY_5OEGcRjb-Q2L3Th0ESw5HA-g/viewform"
+      }
+    ]
+  }
+}
