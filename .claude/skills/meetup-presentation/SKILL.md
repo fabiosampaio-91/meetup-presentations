@@ -109,7 +109,8 @@ banner from meetup.com) there too. `slug` = `YYYY-MM-DD-<kebab-name>`.
    - converts to PDF with LibreOffice headless and asserts page count == slide count; if LibreOffice
      could not embed the brand font, prints the PDF from the web deck with headless Chrome instead
      (`engine=chrome` in the output) and keeps the LibreOffice render as `preview/pptx-XX.png`;
-   - renders `preview/slide-XX.png` from the PDF and `preview/web-XX.png` with headless Chrome;
+   - renders `preview/slide-XX.png` from the PDF, `preview/web-XX.png` (each slide at 1600x900) and
+     `preview/web-fit-<size>.png` (slide 1 at laptop, portrait and phone window sizes) with headless Chrome;
    - copies the web deck + PDF into `docs/<slug>/` and regenerates `docs/index.html`.
    Dependencies: `python-pptx qrcode pillow python-docx pymupdf opencv-python-headless`, LibreOffice
    (`soffice`), Google Chrome (optional screenshots).
@@ -120,7 +121,8 @@ banner from meetup.com) there too. `slug` = `YYYY-MM-DD-<kebab-name>`.
 - Open **all** `preview/slide-XX.png` (final PDF), `preview/web-XX.png` (interactive page) and
   `preview/pptx-XX.png` (LibreOffice render of the PPTX, geometry only if fonts fell back) and check: no overflowing or clipped
   text, no overlapping elements, logos fully visible and proportional, readable contrast, QR codes
-  crisp with a quiet zone, page number/footer not covered.
+  crisp with a quiet zone, page number/footer not covered. In `web-fit-*.png` the whole slide must be
+  visible and centred with the background around it at every window size (never clipped).
 - Confirm the PDF font list contains the brand font and the page count equals the slide count.
 - Fix `deck.json` / the layout, rebuild, re-check. Only report done when the check is clean.
 

@@ -276,8 +276,8 @@ class HtmlBackend:
 :root{{--purple:{b["colors"]["purple"]};--navy:{b["colors"]["navy"]};}}
 *{{box-sizing:border-box}}
 html,body{{margin:0;height:100%;background:var(--navy);overflow:hidden;font-family:"{font}","Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}}
-#viewport{{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}}
-#stage{{position:relative;width:1600px;height:900px;transform-origin:center center;overflow:hidden;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.45)}}
+#viewport{{position:fixed;inset:0;overflow:hidden}}
+#stage{{position:absolute;left:50%;top:50%;width:1600px;height:900px;margin:-450px 0 0 -800px;transform-origin:center center;transform:scale(1);overflow:hidden;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.45)}}
 .slide{{position:absolute;inset:0;background:url("{self._uri(bg_path)}") center/cover no-repeat;opacity:0;visibility:hidden;transition:opacity .35s ease}}
 .slide.active{{opacity:1;visibility:visible}}
 .r,.t,.i{{position:absolute;display:block}}
@@ -291,7 +291,7 @@ a .r,a .t,a .i{{cursor:pointer}}
 #nav button{{all:unset;cursor:pointer;padding:4px 10px;border:1px solid rgba(255,255,255,.5);border-radius:999px;font:inherit;color:#fff}}
 #nav button:hover{{background:rgba(255,255,255,.15)}}
 #hint{{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);color:#fff;background:rgba(0,0,0,.45);padding:8px 14px;border-radius:999px;font-size:13px;z-index:9;transition:opacity .6s}}
-@media print{{@page{{size:1600px 900px;margin:0}}html,body{{overflow:visible;background:#fff;width:1600px}}#viewport{{position:static;display:block}}#stage{{transform:none!important;box-shadow:none;border-radius:0;height:auto;overflow:visible}}.slide{{position:relative;opacity:1;visibility:visible;height:900px;width:1600px;break-after:page;page-break-after:always;transition:none}}#bar,#nav,#hint{{display:none}}}}
+@media print{{@page{{size:1600px 900px;margin:0}}html,body{{overflow:visible;background:#fff;width:1600px}}#viewport{{position:static;display:block}}#stage{{position:static;left:auto;top:auto;margin:0;transform:none!important;box-shadow:none;border-radius:0;height:auto;overflow:visible}}.slide{{position:relative;opacity:1;visibility:visible;height:900px;width:1600px;break-after:page;page-break-after:always;transition:none}}#bar,#nav,#hint{{display:none}}}}
 </style></head>
 <body>
 <div id="bar"></div>
@@ -720,8 +720,15 @@ def screenshot_web(html: Path, out_dir: Path, n: int):
                            capture_output=True, timeout=90)
         except subprocess.TimeoutExpired:
             failed.append(i)
+    for size in ("1440x800", "900x1100", "390x844"):        # responsive check: laptop, portrait, phone
+        try:
+            subprocess.run([str(CHROME), "--headless=new", "--disable-gpu", "--hide-scrollbars", f"--window-size={size.replace('x', ',')}",
+                            "--virtual-time-budget=4000", f"--screenshot={out_dir / f'web-fit-{size}.png'}", f"{html.as_uri()}#1"],
+                           capture_output=True, timeout=90)
+        except subprocess.TimeoutExpired:
+            failed.append(size)
     if failed:
-        print(f"WARN  Chrome screenshot timed out for slide(s) {failed}; re-run the build or check preview/web-XX.png manually")
+        print(f"WARN  Chrome screenshot timed out for {failed}; re-run the build or check preview/web-*.png manually")
     return True
 
 
