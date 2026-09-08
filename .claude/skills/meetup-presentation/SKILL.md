@@ -27,6 +27,11 @@ description (agenda, talks, speakers, sponsors thanks) and the `featuredEventPho
 banner). The group page gives member count, founding date and the leadership list. Fetch the KCD/CNCF
 page for dates, venue and keynotes.
 
+Organizer photos: the group page JSON carries `memberPhoto` ids for (some) leaders; the same photo is served at
+`https://secure-content.meetupstatic.com/images/classic-member/<photoId>/300x300.webp` (save it under
+`Sources/<meetup>/organizers/`). The leaders page and member profiles require a login, so a screenshot of the
+leadership list dropped in Sources is the fallback: crop the 80px avatar circles (see `prepare_assets.py`).
+
 Facts to extract: meetup name and edition number, date, time, venue + address, agenda, speakers with
 role and talk title, organizers and roles, community description and numbers, social links, sponsors,
 partner(s), KCD event (dates, venue, keynotes, site URL, discount code), raffle form URL.

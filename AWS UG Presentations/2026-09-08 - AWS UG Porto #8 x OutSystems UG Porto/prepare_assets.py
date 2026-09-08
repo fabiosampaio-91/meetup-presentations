@@ -83,6 +83,42 @@ ban = Image.open(SRC / "banner" / "meetup-event-featured-photo (#8 banner from m
 ban.crop((1192, 236, 1663, 726)).save(A / "photos" / "ricardo-pereira.jpg", quality=92)
 ban.crop((1192, 918, 1663, 1408)).save(A / "photos" / "rafael-arruda.jpg", quality=92)
 
+# --- Joint meetup visual (AWS + OutSystems Porto hexagon) for the About slide -------
+joint = Image.open(SRC / "banner" / "WhatsApp Image 2026-08-20 at 10.47.45 (1).jpeg")
+trim(whiten_to_alpha(joint, 238), pad=12).save(A / "logos" / "aws-outsystems-porto.png")
+
+# --- Organizer avatars -------------------------------------------------------------------
+# Fabio, Gabriel and Luiz: the same Meetup profile photos at 300x300 (photo ids from the group
+# page JSON, saved under Sources/<meetup>/organizers/) - identical framing, no UI badge overlay.
+# Tiago and Ivan: cropped from the Meetup leadership screenshot (80px circles, same column).
+for slug in ("fabio-sampaio", "gabriel-alves", "luiz-rodrigues"):
+    src = next((SRC / "organizers").glob(f"{slug} (meetup member photo *).png"))
+    Image.open(src).convert("RGB").resize((320, 320), Image.LANCZOS).save(A / "photos" / f"org-{slug}.png")
+
+shot = Image.open(SRC / "organizers" / "Screenshot 2026-09-08 at 11.22.19.png").convert("RGB")
+px = shot.load()
+def ink(x, y, t=60):
+    return sum(abs(c - 255) for c in px[x, y]) > t
+rows, cur = [], None
+for y in range(shot.height):
+    if any(ink(x, y) for x in range(90, 200)):
+        cur = [y, y] if cur is None else [cur[0], y]
+    elif cur is not None:
+        if cur[1] - cur[0] > 40:
+            rows.append(cur)
+        cur = None
+assert len(rows) == 5, rows
+D = 80                                   # avatar diameter in the screenshot
+xs = [next(x for x in range(90, 200) if any(ink(x, y) for y in range(a, b))) for a, b in rows]
+x0 = sorted(xs)[len(xs) // 2]            # median left edge of the avatar column
+for (a, b), slug in zip(rows, ["fabio-sampaio", "gabriel-alves", "ivan-ferreira", "luiz-rodrigues", "tiago-rodrigues"]):
+    if slug not in ("ivan-ferreira", "tiago-rodrigues"):
+        continue
+    cy = (a + b) / 2
+    box = (x0 + 1, int(round(cy - D / 2)) + 1, x0 + D - 1, int(round(cy + D / 2)) - 1)
+    shot.crop(box).resize((320, 320), Image.LANCZOS).save(A / "photos" / f"org-{slug}.png")
+print("organizer avatars ready; screenshot rows", rows, "column x0", x0)
+
 # --- Background: banner gradient (navy -> purple) + the previous deck's diagonal bands
 W, H = 2560, 1440
 NAVY, PURPLE = (0x20, 0x1E, 0x37), (0x7B, 0x5A, 0xC2)

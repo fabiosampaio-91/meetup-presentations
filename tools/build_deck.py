@@ -517,8 +517,8 @@ def draw_deck(c: Canvas, d: dict):
     a = d["about"]
     c.title_card(a["title"])
     c.card(0.6, 1.75, 5.2, 4.95)
-    c.image(d["community_logo"], 0.85, 2.0, 4.7, 2.5)
-    c.text(0.95, 4.65, 4.5, 1.95, [[Run(a["tagline"], 600, C["black"], 15)], [Run(a["quote"], 400, C["muted_on_light"], 12.5, italic=True)]],
+    c.image(a.get("visual", d["community_logo"]), 0.85, 1.95, 4.7, 2.95)
+    c.text(0.95, 5.05, 4.5, 1.55, [[Run(a["tagline"], 600, C["black"], 15)], [Run(a["quote"], 400, C["muted_on_light"], 12.5, italic=True)]],
            15, C["black"], 400, ls=1.05, para_space=8)
     c.text(6.3, 1.8, 4.55, 4.9, [f"•  {b}" for b in a["bullets"]], 18, C["white"], 500, ls=1.05, para_space=10, valign="middle")
     c.card(11.05, 1.75, 1.7, 2.25)
@@ -538,7 +538,11 @@ def draw_deck(c: Canvas, d: dict):
         x = 0.6 + i * (cw + gap)
         y, h = 2.15, 3.55
         c.card(x, y, cw, h)
-        c.initials_avatar(x + cw / 2, y + 0.95, 1.25, p["name"])
+        if p.get("photo"):
+            dia = 1.25
+            c.image(p["photo"], x + cw / 2 - dia / 2, y + 0.95 - dia / 2, dia, dia, fit="cover", radius=dia / 2)
+        else:
+            c.initials_avatar(x + cw / 2, y + 0.95, 1.25, p["name"])
         c.text(x + 0.12, y + 1.75, cw - 0.24, 0.75, p["name"], 14.5, C["black"], 700, "center", "middle", ls=0.95)
         c.pill(x + cw / 2, y + 2.6, 0.36, p["role"], C["grey"], C["black"], 9.5, 500, align="center")
         if p.get("hosting"):
@@ -621,11 +625,12 @@ def draw_deck(c: Canvas, d: dict):
     c.pill(0.85, 6.3, 0.38, k["agenda_note"], C["purple"], C["white"], 11, 700)
     # QR + discount code
     c.card(8.8, 1.62, 3.93, 5.2, framed=True)
-    c.qr("kcd-site", k["url"], 2.75, 8.8 + (3.93 - 2.75) / 2, 1.85)
-    c.text(8.95, 4.62, 3.63, 0.35, k["qr_label"], 11.5, C["black"], 700, "center", "middle")
-    c.text(8.95, 5.08, 3.63, 0.3, k["code_label"].upper(), 9.5, C["muted_on_light"], 700, "center", "middle", letter_spacing=1.2)
-    c.pill(8.8 + 3.93 / 2, 5.42, 0.6, k["discount_code"], C["deep"], C["white"], 17, 700, align="center", w=3.3)
-    c.text(8.95, 6.15, 3.63, 0.45, k["code_hint"], 9, C["muted_on_light"], 400, "center", "middle", ls=1.0)
+    c.qr("kcd-site", k["url"], 2.55, 8.8 + (3.93 - 2.55) / 2, 1.85)
+    c.text(8.95, 4.43, 3.63, 0.33, k["qr_label"], 11.5, C["black"], 700, "center", "middle")
+    c.text(8.95, 4.82, 3.63, 0.6, k["discount_label"], 30, C["deep"], 700, "center", "middle", ls=0.95)
+    c.text(8.95, 5.42, 3.63, 0.28, k["code_label"].upper(), 9.5, C["muted_on_light"], 700, "center", "middle", letter_spacing=1.2)
+    c.pill(8.8 + 3.93 / 2, 5.74, 0.58, k["discount_code"], C["deep"], C["white"], 17, 700, align="center", w=3.3)
+    c.text(8.95, 6.38, 3.63, 0.38, k["code_hint"], 9, C["muted_on_light"], 400, "center", "middle", ls=1.0)
     c.footer(total)
 
     # 8. RAFFLE
@@ -707,10 +712,16 @@ def screenshot_web(html: Path, out_dir: Path, n: int):
         return False
     for old in out_dir.glob("web-*.png"):
         old.unlink()
+    failed = []
     for i in range(1, n + 1):
-        subprocess.run([str(CHROME), "--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1600,900",
-                        "--virtual-time-budget=4000", f"--screenshot={out_dir / f'web-{i:02d}.png'}", f"{html.as_uri()}#{i}"],
-                       capture_output=True, timeout=120)
+        try:
+            subprocess.run([str(CHROME), "--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1600,900",
+                            "--virtual-time-budget=4000", f"--screenshot={out_dir / f'web-{i:02d}.png'}", f"{html.as_uri()}#{i}"],
+                           capture_output=True, timeout=90)
+        except subprocess.TimeoutExpired:
+            failed.append(i)
+    if failed:
+        print(f"WARN  Chrome screenshot timed out for slide(s) {failed}; re-run the build or check preview/web-XX.png manually")
     return True
 
 

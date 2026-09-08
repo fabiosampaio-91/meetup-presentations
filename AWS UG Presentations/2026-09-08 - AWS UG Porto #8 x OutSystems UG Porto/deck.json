@@ -55,7 +55,8 @@
       "#8 edition: our first joint meetup with OutSystems User Group Porto"
     ],
     "join_url": "https://www.meetup.com/aws-porto-user-group/",
-    "join_label": "Join us on Meetup"
+    "join_label": "Join us on Meetup",
+    "visual": "assets/logos/aws-outsystems-porto.png"
   },
   "organizers": {
     "title": "Our Leadership Team",
@@ -64,25 +65,30 @@
       {
         "name": "Fábio Sampaio",
         "role": "Organizer",
-        "hosting": true
+        "hosting": true,
+        "photo": "assets/photos/org-fabio-sampaio.png"
       },
       {
         "name": "Gabriel Alves",
-        "role": "Co-organizer",
-        "hosting": true
+        "role": "Organizer",
+        "hosting": true,
+        "photo": "assets/photos/org-gabriel-alves.png"
       },
       {
         "name": "Luiz Rodrigues",
-        "role": "Event organizer",
-        "hosting": true
+        "role": "Organizer",
+        "hosting": true,
+        "photo": "assets/photos/org-luiz-rodrigues.png"
       },
       {
         "name": "Tiago Rodrigues",
-        "role": "Co-organizer"
+        "role": "Organizer",
+        "photo": "assets/photos/org-tiago-rodrigues.png"
       },
       {
         "name": "Ivan Ferreira",
-        "role": "Leadership team"
+        "role": "Event Organizer",
+        "photo": "assets/photos/org-ivan-ferreira.png"
       }
     ],
     "note": "Come say hi during the break: feedback, talk ideas and venue offers are always welcome."
@@ -189,9 +195,10 @@
     "agenda_note": "Full agenda released this week",
     "url": "https://community2.cncf.io/events/details/cncf-kcd-porto-presents-kcd-porto-2026-collab-with-devops-days-portugal/",
     "qr_label": "Scan for tickets & info",
-    "code_label": "Discount code",
+    "code_label": "with discount code",
     "discount_code": "cnpdevopsdiscount",
-    "code_hint": "Use it at checkout on the KCD Porto event page"
+    "code_hint": "10% off tickets at checkout on the KCD Porto event page",
+    "discount_label": "10% off"
   },
   "raffle": {
     "title": "Raffle: win a KCD Porto ticket",
