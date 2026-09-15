@@ -1,0 +1,122 @@
+{
+  "slug": "2026-09-15-synvert-xgeeks-company-deck",
+  "community": "synvert xgeeks",
+  "title": "synvert xgeeks — Community Deck",
+  "description": "The generic synvert xgeeks company deck reused at every meetup: sponsors & partners, about xgeeks, GlobalLogic, what we do, clients and the communities we run.",
+  "date_iso": "2026-09-15",
+  "footer": "synvert xgeeks, a GlobalLogic company",
+  "brand": {
+    "font": "Montserrat",
+    "shadow_offset": 0.09,
+    "colors": {
+      "teal": "#00EBB6",
+      "navy": "#002E33",
+      "white": "#FFFFFF",
+      "black": "#000000",
+      "grey": "#E5EAEB",
+      "mint": "#F5FFF2",
+      "muted_on_light": "#5A6B6C",
+      "muted_on_dark": "#8FD9C7"
+    }
+  },
+  "cover": {
+    "label": "MEETUP BANNER GOES HERE",
+    "sublabel": "Replace this placeholder with the event banner (16:9) before each meetup"
+  },
+  "sponsors_partners": {
+    "title": "Sponsors & Partners",
+    "sponsors_label": "SPONSORS",
+    "partners_label": "PARTNERS",
+    "sponsor_slots": 3,
+    "partner_slots": 2,
+    "thanks": "A huge thank you to our sponsors and partners for making this meetup possible!"
+  },
+  "about": {
+    "title": "About xgeeks",
+    "stats": [
+      {"value": "100+", "label": "People"},
+      {"value": "3", "label": "Locations"},
+      {"value": "Top 50", "label": "Teamlyzer"},
+      {"value": "9.1", "label": "Employee NPS"}
+    ],
+    "photo": "assets/photos/team.jpg"
+  },
+  "we_are": {
+    "kicker": "WE'RE",
+    "logo": "assets/logos/synvert-xgeeks-white.png",
+    "globallogic_badge": "A GlobalLogic Company",
+    "globallogic_logo": "assets/logos/globallogic.png"
+  },
+  "accelerate": {
+    "headline": "Accelerating enterprise success with AI and Cloud Native",
+    "subhead": "Real business impact — powered by AI-native engineering, backed by GlobalLogic’s global scale.",
+    "badge": "A GlobalLogic Company",
+    "icon": "assets/icons/rocket-laptop.png"
+  },
+  "what_we_do": {
+    "kicker": "$ kubectl apply -f ./expertise.yaml",
+    "subtag": "AI-native engineering, end to end",
+    "icon": "assets/icons/lightbulb-planet.png",
+    "areas": [
+      {"title": "Cloud Native Applications"},
+      {"title": "Platform Engineering"},
+      {"title": "AI Engineering"},
+      {"title": "Data Engineering"}
+    ]
+  },
+  "clients": {
+    "kicker": "$ kubectl apply -f ./clients.yaml",
+    "logos": [
+      "mercedes-benz.png", "tblx.png", "coverflex.png", "salsify.png",
+      "telekom.png", "lichtblick.png", "american-tower.png", "siemens.png",
+      "datacamp.png", "bmw.png", "putzmeister.png", "mbition.png",
+      "die-continentale.png", "cjr-renewables.png", "omip.png", "hitachi.png",
+      "helvetia.png"
+    ]
+  },
+  "what_about_community": {
+    "title_prefix": "What About ",
+    "community_placeholder": "[Community Name]",
+    "image_label": "Community screenshot / photo goes here",
+    "image_sublabel": "e.g. the Meetup.com group page",
+    "stats": [
+      "[XXX] members on Meetup 👥",
+      "[XX]+ members on Slack 💻",
+      "[X] meetups so far 📆",
+      "1 meetup per [cadence]",
+      "[XXX]+ attendees (avg [XX] per meetup) 🎟️"
+    ]
+  },
+  "tech_talks_formats": {
+    "title": "Tech Talks Formats",
+    "blocks": [
+      {
+        "name": "Viseu Tech Talks",
+        "logo": "assets/logos/viseu-tech-talks-format.png",
+        "description_placeholder": "[Short description of Viseu Tech Talks — cadence, focus, audience]"
+      },
+      {
+        "name": "Porto Tech Talks",
+        "logo": null,
+        "logo_placeholder": "Porto Tech Talks logo goes here",
+        "description_placeholder": "[Short description of Porto Tech Talks — cadence, focus, audience]"
+      }
+    ]
+  },
+  "community_grid": {
+    "kicker": "$ kubectl apply -f ./community.yaml",
+    "tagline": "synvert xgeeks acts as a driving force in tech ecosystems, growing and connecting communities.",
+    "icon": "assets/icons/binoculars.png",
+    "communities": [
+      {"name": "Viseu Tech Talks", "logo": "viseu-tech-talks.png"},
+      {"name": "Leiria Tech Talks", "logo": "leiria-tech-talks.png"},
+      {"name": "Lisbon GenAI Community", "logo": "lisbon-genai-community.png"},
+      {"name": "AWS User Group Porto", "logo": "aws-user-group-porto.png"},
+      {"name": "Cloud Native Lisbon", "logo": "cloud-native-lisbon.png"},
+      {"name": "Cloud Native Porto", "logo": "cloud-native-porto.png"},
+      {"name": "DevOps Braga", "logo": "devops-braga.png"},
+      {"name": "LeadDev Meetup — Lisbon", "logo": "leaddev-meetup-lisbon.png"},
+      {"name": "DevOps Lisbon", "logo": "devops-lisbon.png"}
+    ]
+  }
+}

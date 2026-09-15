@@ -1,13 +1,18 @@
 ---
 name: meetup-presentation
-description: Build a community meetup deck (PPTX + PDF + web) from the files in Sources/ and publish it to GitHub Pages. Use whenever the user asks for a new meetup presentation, deck or slides for any community (AWS UG, KCD, DevOps Days, OutSystems UG, ...). Encodes the house procedure - sources first, banner-driven branding, fixed 9-slide order, sponsors vs meetup partner, folder conventions, QR codes, render check, commit + push + Pages + live link.
+description: Build a community meetup deck (PPTX + PDF + web) from the files in Sources/ and publish it to GitHub Pages. Use whenever the user asks for a new meetup presentation, deck or slides for any community (AWS UG, KCD, DevOps Days, OutSystems UG, ...), OR for the generic synvert xgeeks company deck reused across every meetup (sponsors & partners, about xgeeks, GlobalLogic, what we do, clients, communities). Encodes the house procedure - sources first, banner-driven branding, fixed slide order, sponsors vs meetup partner, folder conventions, QR codes, render check, commit + push + Pages + live link.
 ---
 
 # Meetup presentation
 
 Repeatable procedure for every meetup deck in this repository. Follow it in order; do not skip the
-verification or publishing steps. The deliverables are always **PPTX + PDF + web deck**, built by
-`tools/build_deck.py` from a per-meetup `deck.json`.
+verification or publishing steps. The deliverables are always **PPTX + PDF + web deck**.
+
+Two deck kinds share this repo:
+- **Event deck** (per meetup edition: AWS UG, KCD, OutSystems UG, ...) - built by `tools/build_deck.py`
+  from a per-meetup `deck.json`. §1-9 below.
+- **Company deck** (the generic, reusable synvert xgeeks deck presented before the talks at *any*
+  meetup) - built by `tools/build_company_deck.py` from its own `deck.json`. See §10.
 
 ## 1. Read the sources first, derive everything from them
 
@@ -138,3 +143,69 @@ banner from meetup.com) there too. `slug` = `YYYY-MM-DD-<kebab-name>`.
 
 Finish with: what was built, where each file lives, what was moved in `Sources/`, the commit hash,
 the live site link, and the open items that could not be resolved from the sources.
+
+## 10. Variant: the generic company deck
+
+The user reuses ONE synvert xgeeks deck across every meetup they run, tweaking a few slides in
+PowerPoint per event. When asked to build/refresh *that* deck (not a specific meetup edition), it
+is a different shape from §1-9 above - same house rules (sources first, never invent, render check,
+publish), different slide set and a different builder:
+
+- **Branding is exclusive to the reference deck.** Pull colour palette, typography, spacing, card/pill
+  language and icon set only from the current xgeeks company deck in `Sources/` (the one the user
+  already presents - look for a deck with "WE'RE synvert xgeeks", "$ kubectl apply -f ..." slides).
+  Never take colours from a banner or another community's deck; a differently-branded deck (e.g. an
+  AWS UG deck) can still be used as a *layout* reference (see sponsors & partners below) but never as
+  a colour/font source. This xgeeks deck's own title convention is a small square tab overlapping a
+  rounded pill (`$ kubectl apply -f ./x.yaml`, "What About ...") - not the AWS deck's black-bordered
+  `title_card()`; keep using plain `card(framed=True)` for content tiles (both decks already share
+  that hard-shadow black-border language) but build titles with the tab+pill pattern instead
+  (`kicker_pill()` in `tools/build_company_deck.py`).
+- **Audience/tone**: presented live to an engineer audience right before the talks start, ~3-4 minutes
+  total, 5-second-from-the-back-of-the-room readability. Headline + a few words per slide, no bullet
+  walls, no marketing filler. Positioning is AI-native (built *with* AI, specific about AI/Cloud Native
+  engineering) - this has to read in the ACCELERATE and WHAT WE DO slides especially, without hype.
+- **Folder conventions**: organise every source file for this deck under `Sources/xgeeks presentation/`
+  (previous-deck/, logos/, communities/, ...) so `Sources/` stays clean, mirroring §5. Deliverables go
+  in `xgeeks Presentations/YYYY-MM-DD - synvert xgeeks Company Deck/`, same internal layout as an event
+  deck (`deck.json`, `prepare_assets.py`, pptx/pdf/web, `assets/`, `preview/`).
+- **Fixed 10-slide order**: 1 Cover (banner placeholder, nothing else) · 2 Sponsors & Partners
+  (generic, editable logo slots - not the old "intro" slide; use a prior AWS-style sponsors/meetup-partner
+  slide purely as the *layout* reference: labelled SPONSORS/PARTNERS sections, one card per logo) ·
+  3 About xgeeks · 4 We're synvert xgeeks + GlobalLogic lockup · 5 Accelerate (must carry the
+  GlobalLogic-backed, AI-native positioning, condensed) · 6 What We Do (Cloud Native Applications,
+  Platform Engineering, AI Engineering, Data Engineering) · 7 Clients (logo grid only) · 8 What About
+  \<Community\> (reusable placeholder) · 9 Tech Talks Formats (two-block, e.g. Viseu/Porto Tech Talks)
+  · 10 `$ kubectl apply -f ./community.yaml` (every community logo, the hero "show the room" slide).
+- **synvert xgeeks + GlobalLogic lockup**: since the GlobalLogic acquisition, slide 4 keeps the existing
+  big wordmark treatment and adds the official GlobalLogic logo (`Sources/.../logos/GlobalLogic-logo.jpg`
+  or similar) in its own clean white plaque - GlobalLogic keeps its own official black-on-white colours,
+  never recoloured/stretched, with clear space respected. Reinforce with an "A GlobalLogic Company"
+  pill/badge on the Accelerate slide too.
+- **Reusable placeholder slides are real, editable PPTX objects, not screenshots.** Cover banner slot,
+  sponsor/partner logo slots, the community name + stats on "What About \<Community\>", and any missing
+  logo (e.g. a sibling Tech Talks chapter with no logo yet in `Sources/`) are all dashed-border boxes
+  with clear labels the user fills in PowerPoint - never bake them into a background image. Use
+  `Canvas.placeholder(x, y, w, h, label, sublabel)` (added to the shared `tools/build_deck.py`, dashed
+  outline via `Canvas.rect(..., dashed=True)`) for every one of these. If a required logo is genuinely
+  missing from `Sources/` (e.g. a community with no distinct logo yet), don't invent one - draw a
+  placeholder slot and list it as an open item, exactly like a missing fact in the event-deck flow.
+  Content that *is* in the sources (client logos, community logos, stats) must trace back to a file -
+  never invented, matching §1's rule.
+- **Build**: `python3 tools/build_company_deck.py "xgeeks Presentations/<dated folder>"`. This script
+  imports the shared `Canvas`/backends/PDF pipeline from `tools/build_deck.py` (same dual PPTX+web
+  geometry, same LibreOffice+Chrome PDF fallback, same preview renders and GitHub Pages publish step)
+  but defines its own 10-slide `draw_deck()`, since the slide types don't overlap with the fixed
+  9-slide event template. `deck.json` here has its own schema (see the file itself, or
+  `tools/build_company_deck.py`'s field access) - not the event-deck schema in `tools/README.md`.
+- **Fonts**: self-hosting the brand font (`tools/fonts/<family>/*.ttf`, base64-embedded via
+  `embedded_font_css()`) is now the default in the shared web-deck HTML, not just a Poppins-specific
+  workaround - some Google-Fonts-served families (Montserrat included) get silently rasterised as
+  nameless Type3 fonts by headless Chrome's PDF printer instead of embedding cleanly, which fails the
+  "PDF font list contains the brand font" check in §7; self-hosting sidesteps it and works offline.
+  If the brand font isn't already vendored under `tools/fonts/`, get static weights (Regular/Medium/
+  SemiBold/Bold, + Italic/BoldItalic if used) - if only a variable font is available (e.g. via
+  `brew install --cask font-<family>`), instance it with `fontTools.varLib.instancer` the way
+  `tools/fonts/montserrat/` was generated, and carry over the font's own OFL/licence text.
+- Everything else - render check (§7, now checking 10 slides), commit + push + Pages + live link (§8),
+  and the final report (§9) - applies unchanged.

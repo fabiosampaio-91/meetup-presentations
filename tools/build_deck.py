@@ -23,6 +23,7 @@ from qrcode.constants import ERROR_CORRECT_Q
 from pptx import Presentation
 from pptx.util import Inches, Pt, Emu
 from pptx.dml.color import RGBColor
+from pptx.oxml.ns import qn
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR, MSO_AUTO_SIZE
 
@@ -33,16 +34,43 @@ FONT_DIRS = [TOOLS_DIR / "fonts", Path.home() / "Library/Fonts", Path("/Library/
 
 # ----------------------------------------------------------------------------- helpers
 
-def find_font_file(family: str, weight: int) -> Path | None:
+def find_font_file(family: str, weight: int, style: str | None = None) -> Path | None:
     names = {400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold", 800: "ExtraBold"}
     fam = family.replace(" ", "")
+    stem = style or names[weight]
     for d in FONT_DIRS:
         for sub in (d / fam.lower(), d / fam, d):
             for ext in ("ttf", "otf"):
-                p = sub / f"{fam}-{names[weight]}.{ext}"
+                p = sub / f"{fam}-{stem}.{ext}"
                 if p.exists():
                     return p
     return None
+
+
+def embedded_font_css(family: str) -> str:
+    """Self-host the brand font as base64 @font-face rules from tools/fonts/<family>/.
+
+    Chrome's headless PDF printer embeds a locally-hosted static TTF cleanly (Type0/
+    subset) but silently rasterizes some Google-Fonts-served families as Type3 bitmap
+    fonts instead (no named font in the PDF, brand-font check fails) - self-hosting
+    sidesteps that and also makes the web deck work fully offline.
+    """
+    rules = []
+    for weight, style in ((400, "normal"), (500, "normal"), (600, "normal"), (700, "normal")):
+        p = find_font_file(family, weight)
+        if p:
+            mime = "font/ttf" if p.suffix.lower() == ".ttf" else "font/otf"
+            b64 = base64.b64encode(p.read_bytes()).decode()
+            rules.append(f"@font-face{{font-family:'{family}';font-weight:{weight};font-style:{style};"
+                         f"font-display:swap;src:url(data:{mime};base64,{b64}) format('truetype');}}")
+    for weight, stem in ((400, "Italic"), (700, "BoldItalic")):
+        p = find_font_file(family, weight, style=stem)
+        if p:
+            mime = "font/ttf" if p.suffix.lower() == ".ttf" else "font/otf"
+            b64 = base64.b64encode(p.read_bytes()).decode()
+            rules.append(f"@font-face{{font-family:'{family}';font-weight:{weight};font-style:italic;"
+                         f"font-display:swap;src:url(data:{mime};base64,{b64}) format('truetype');}}")
+    return "\n".join(rules)
 
 
 class Measurer:
@@ -134,7 +162,7 @@ class PptxBackend:
         fam = self.brand["font"]
         return {400: (fam, False), 500: (f"{fam} Medium", False), 600: (f"{fam} SemiBold", False), 700: (fam, True)}[weight]
 
-    def rect(self, x, y, w, h, fill, radius=0, line=None, line_w=0, link=None):
+    def rect(self, x, y, w, h, fill, radius=0, line=None, line_w=0, link=None, dashed=False):
         shp = self.slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE if radius else MSO_SHAPE.RECTANGLE,
                                           Inches(x), Inches(y), Inches(w), Inches(h))
         if radius:
@@ -146,6 +174,9 @@ class PptxBackend:
             shp.fill.solid(); shp.fill.fore_color.rgb = RGBColor(*rgb(fill))
         if line:
             shp.line.color.rgb = RGBColor(*rgb(line)); shp.line.width = Pt(line_w)
+            if dashed:
+                ln = shp.line._get_or_add_ln()
+                ln.append(ln.makeelement(qn("a:prstDash"), {"val": "dash"}))
         else:
             shp.line.fill.background()
         if link:
@@ -157,6 +188,16 @@ class PptxBackend:
         shp = self.slide.shapes.add_shape(MSO_SHAPE.OVAL, Inches(x), Inches(y), Inches(w), Inches(h))
         shp.shadow.inherit = False
         shp.fill.solid(); shp.fill.fore_color.rgb = RGBColor(*rgb(fill)); shp.line.fill.background()
+
+    def gradient_rect(self, x, y, w, h, c1, c2, angle=45):
+        shp = self.slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(x), Inches(y), Inches(w), Inches(h))
+        shp.shadow.inherit = False
+        shp.line.fill.background()
+        shp.fill.gradient()
+        stops = shp.fill.gradient_stops
+        stops[0].color.rgb = RGBColor(*rgb(c1)); stops[0].position = 0.0
+        stops[1].color.rgb = RGBColor(*rgb(c2)); stops[1].position = 1.0
+        shp.fill.gradient_angle = angle
 
     def text(self, x, y, w, h, paras, size, color, weight, align, valign, ls, para_space, link, letter_spacing=0):
         tb = self.slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
@@ -217,16 +258,23 @@ class HtmlBackend:
     def _pos(self, x, y, w, h):
         return f"left:{self.px(x)};top:{self.px(y)};width:{self.px(w)};height:{self.px(h)};"
 
-    def rect(self, x, y, w, h, fill, radius=0, line=None, line_w=0, link=None):
+    def rect(self, x, y, w, h, fill, radius=0, line=None, line_w=0, link=None, dashed=False):
         st = self._pos(x, y, w, h) + f"border-radius:{self.px(radius)};"
         st += f"background:{fill};" if fill else ""
         if line:
-            st += f"border:{line_w * PX / 72:.1f}px solid {line};box-sizing:border-box;"
+            style = "dashed" if dashed else "solid"
+            st += f"border:{line_w * PX / 72:.1f}px {style} {line};box-sizing:border-box;"
         el = f'<div class="r" style="{st}"></div>'
         self.slides[-1].append(self._wrap_link(el, link))
 
     def ellipse(self, x, y, w, h, fill):
         self.slides[-1].append(f'<div class="r" style="{self._pos(x, y, w, h)}border-radius:50%;background:{fill};"></div>')
+
+    def gradient_rect(self, x, y, w, h, c1, c2, angle=45):
+        # PowerPoint gradient angle is clockwise from 3 o'clock; CSS linear-gradient angle is clockwise from 12 o'clock.
+        css_angle = (angle + 90) % 360
+        st = self._pos(x, y, w, h) + f"background:linear-gradient({css_angle}deg, {c1}, {c2});"
+        self.slides[-1].append(f'<div class="r" style="{st}"></div>')
 
     def text(self, x, y, w, h, paras, size, color, weight, align, valign, ls, para_space, link, letter_spacing=0):
         jc = {"top": "flex-start", "middle": "center", "bottom": "flex-end"}[valign]
@@ -260,7 +308,12 @@ class HtmlBackend:
     def save(self, path, bg_path):
         b = self.brand
         font = b["font"]
+        slide_bg_css = f'background:url("{self._uri(bg_path)}") center/cover no-repeat;' if bg_path else f'background:{b["colors"].get("navy", "#000")};'
+        font_css = embedded_font_css(font)
         gf = font.replace(" ", "+")
+        font_tag = (f"<style>{font_css}</style>" if font_css else
+                    f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+                    f'<link href="https://fonts.googleapis.com/css2?family={gf}:wght@400;500;600;700&display=swap" rel="stylesheet">')
         n = len(self.slides)
         slides_html = "\n".join(
             f'<section class="slide" data-n="{i + 1}" aria-label="Slide {i + 1}">{"".join(els)}</section>'
@@ -270,15 +323,14 @@ class HtmlBackend:
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{htmlmod.escape(self.meta["title"])}</title>
 <meta name="description" content="{htmlmod.escape(self.meta.get("description", ""))}">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family={gf}:wght@400;500;600;700&display=swap" rel="stylesheet">
+{font_tag}
 <style>
-:root{{--purple:{b["colors"]["purple"]};--navy:{b["colors"]["navy"]};}}
+:root{{--purple:{b["colors"].get("purple", b["colors"].get("navy", "#000"))};--navy:{b["colors"].get("navy", "#000")};}}
 *{{box-sizing:border-box}}
 html,body{{margin:0;height:100%;background:var(--navy);overflow:hidden;font-family:"{font}","Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}}
 #viewport{{position:fixed;inset:0;overflow:hidden}}
 #stage{{position:absolute;left:50%;top:50%;width:1600px;height:900px;margin:-450px 0 0 -800px;transform-origin:center center;transform:scale(1);overflow:hidden;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.45)}}
-.slide{{position:absolute;inset:0;background:url("{self._uri(bg_path)}") center/cover no-repeat;opacity:0;visibility:hidden;transition:opacity .35s ease}}
+.slide{{position:absolute;inset:0;{slide_bg_css}opacity:0;visibility:hidden;transition:opacity .35s ease}}
 .slide.active{{opacity:1;visibility:visible}}
 .r,.t,.i{{position:absolute;display:block}}
 .t{{display:flex;flex-direction:column;overflow:hidden;white-space:pre-wrap;overflow-wrap:break-word}}
@@ -340,7 +392,7 @@ class Canvas:
         self.backends = [self.pptx, self.html]
         self.derived = mdir / "assets" / "derived"
         self.derived.mkdir(parents=True, exist_ok=True)
-        self.bg_path = mdir / self.brand["background"]
+        self.bg_path = mdir / self.brand["background"] if self.brand.get("background") else None
         self.n = 0
         self.warnings = []
 
@@ -349,20 +401,40 @@ class Canvas:
         self.n += 1
         for b in self.backends:
             b.new_slide()
-        if bg:
+        if bg is True:
             self.image(self.bg_path, 0, 0, SLIDE_W, SLIDE_H, fit="fill")
+        elif bg == "gradient":
+            self.gradient_rect(0, 0, SLIDE_W, SLIDE_H, self.C["navy"], self.C["teal"], 45)
+        elif isinstance(bg, str) and bg.startswith("#"):
+            self.rect(0, 0, SLIDE_W, SLIDE_H, bg, radius=0)
 
-    def rect(self, x, y, w, h, fill="#FFFFFF", radius=0.2, line=None, line_w=0, shadow=False, link=None):
+    def gradient_rect(self, x, y, w, h, c1, c2, angle=45):
+        for b in self.backends:
+            b.gradient_rect(x, y, w, h, c1, c2, angle)
+
+    def rect(self, x, y, w, h, fill="#FFFFFF", radius=0.2, line=None, line_w=0, shadow=False, link=None, dashed=False):
         if shadow:
             d = self.brand.get("shadow_offset", 0.09)
             for b in self.backends:
                 b.rect(x + d, y + d, w, h, self.C["black"], radius)
         for b in self.backends:
-            b.rect(x, y, w, h, fill, radius, line, line_w, link)
+            b.rect(x, y, w, h, fill, radius, line, line_w, link, dashed)
 
     def card(self, x, y, w, h, framed=False, link=None):
         """White card. framed=True -> black outline + hard shadow (banner's hero card style)."""
         self.rect(x, y, w, h, self.C["white"], 0.2, self.C["black"] if framed else None, 2.5 if framed else 0, shadow=framed, link=link)
+
+    def placeholder(self, x, y, w, h, label, sublabel=None, radius=0.16):
+        """Dashed editable-slot box: used for cover/sponsor/logo placeholders the user fills in PowerPoint."""
+        self.rect(x, y, w, h, None, radius, self.C.get("muted_on_dark", self.C["grey"]), 1.75, dashed=True)
+        if sublabel:
+            self.text(x + 0.15, y + h / 2 - 0.42, w - 0.3, 0.4, label, 13, self.C.get("muted_on_dark", self.C["grey"]), 700,
+                      "center", "middle", check=False)
+            self.text(x + 0.15, y + h / 2 + 0.02, w - 0.3, 0.35, sublabel, 9.5, self.C.get("muted_on_dark", self.C["grey"]), 500,
+                      "center", "middle", check=False)
+        else:
+            self.text(x + 0.15, y, w - 0.3, h, label, 12.5, self.C.get("muted_on_dark", self.C["grey"]), 700,
+                      "center", "middle", check=False)
 
     def ellipse(self, x, y, w, h, fill):
         for b in self.backends:
