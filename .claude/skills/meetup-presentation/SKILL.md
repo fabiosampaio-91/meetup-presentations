@@ -209,3 +209,30 @@ publish), different slide set and a different builder:
   `tools/fonts/montserrat/` was generated, and carry over the font's own OFL/licence text.
 - Everything else - render check (§7, now checking 10 slides), commit + push + Pages + live link (§8),
   and the final report (§9) - applies unchanged.
+
+## 11. Variant: Lisbon GenAI Community meetup deck
+
+The company deck (§10) re-skinned with a community's own visual identity and re-ordered for that
+meetup night. First built for Lisbon GenAI #16 (2026-10-20) with `tools/build_genai_deck.py`
+(same shared pipeline; its own `deck.json` schema, see the builder):
+
+- **Order (12 slides)**: 1 banner (the poster, full-bleed) · 2 "What About <Community>" (Meetup group
+  page numbers + About text) · 3 Sponsors & Partners (two labelled sections, real logos) · 4 We're
+  synvert xgeeks + GlobalLogic · 5 Accelerate · 6 `people.yaml` · 7 `expertise.yaml` · 8 `clients.yaml` ·
+  9 `community.yaml` (tonight's community highlighted) · 10 KCD in the KCD event's own colours ·
+  11 "Talk with us" (the xgeeks closing slide: linktr.ee QR, collaboration/Slack/Meetup, socials) ·
+  12 "Thanks again to our meetup sponsors" + the venue sponsor's logo (hand-over to them).
+  No Tech Talks Formats slide.
+- **Branding**: palette and card language from the poster (gradient stops in `brand.gradient`; the
+  builder renders the slide background and gradient panels into `assets/derived/`), black hero
+  cards with the corner tab, white framed cards, tab+pill kickers in black. Fonts stay the template's
+  (Montserrat), only the colours change. xgeeks line-art icons are recoloured (teal -> poster
+  red-orange, navy -> black) in `prepare_assets.py`; logos are never recoloured (a white-on-dark
+  client logo gets a black plate via `"dark": true`).
+- **Corporate/clients content comes only from the decks in Sources** (`#9 VTT PTT.pptx`, the all-hands
+  leads/clients slide). Clients = `clients.yaml` + the "Closed" column; Interest/Evaluation/Decision
+  are leads, never shown as clients. The company deck's Data Engineering tile, About paragraph and
+  Accelerate subhead were not in any source and were dropped.
+- **Logos that only exist inside the poster** (e.g. Riskified, ai.pt, AI Lisbon) are rebuilt as crisp
+  RGBA with `flat_logo_upscale()` (pass the inks sampled from the poster when a colour is light);
+  ask for the original files and list them as an open item.

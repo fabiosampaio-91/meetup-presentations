@@ -1,0 +1,167 @@
+{
+  "slug": "2026-10-20-lisbon-genai-community-16",
+  "community": "Lisbon GenAI Community",
+  "title": "#16 Lisbon GenAI Community",
+  "description": "Lisbon GenAI Community #16 meetup deck (Oct 20th, Riskified Lisbon): the community, sponsors and partners, synvert xgeeks, clients, the communities we run, KCD Porto 2026 and Talk with us.",
+  "date_iso": "2026-10-20",
+  "footer": "Lisbon GenAI Community · #16 meetup",
+  "brand": {
+    "font": "Montserrat",
+    "background": "assets/derived/genai-gradient.jpg",
+    "shadow_offset": 0.09,
+    "gradient": [
+      [0.0, "#F8552C"], [0.24, "#F67329"], [0.42, "#F7982A"], [0.54, "#F7B634"],
+      [0.66, "#F8CC32"], [0.78, "#F7E242"], [0.88, "#D3DA2F"], [1.0, "#B3D222"]
+    ],
+    "colors": {
+      "black": "#000000",
+      "white": "#FFFFFF",
+      "ink": "#111111",
+      "navy": "#111111",
+      "grey": "#EDEFEF",
+      "coral": "#F2A890",
+      "red": "#F8552C",
+      "orange": "#F7982A",
+      "yellow": "#F8CC32",
+      "lime": "#B3D222",
+      "muted_on_light": "#4A4A4A",
+      "muted_on_dark": "#BDBDBD"
+    }
+  },
+  "logos": {
+    "synvert_light": "assets/logos/synvert-xgeeks-navy.png"
+  },
+  "banner": "assets/banner/lisbon-genai-16-poster.png",
+  "group_info": {
+    "title_prefix": "What About ",
+    "name": "Lisbon GenAI Community",
+    "visual": "assets/logos/lisbon-genai-hero.png",
+    "stats": [
+      {"value": "1,387", "label": "members on Meetup"},
+      {"value": "4.6", "label": "rating on Meetup (101 ratings)"},
+      {"value": "7", "label": "organizers"},
+      {"value": "#16", "label": "meetup · Oct 20th · Riskified Lisbon"}
+    ],
+    "about": "Our community is dedicated to connecting enthusiasts, developers, and professionals interested in the broader spectrum of Generative AI technologies.",
+    "sponsor_line": "Brought to you by our sponsor, synvert xgeeks, a GlobalLogic company."
+  },
+  "sponsors_partners": {
+    "title": "Sponsors & Partners",
+    "sponsors_label": "Sponsors",
+    "partners_label": "Partners",
+    "sponsors": [
+      {"name": "synvert xgeeks", "logo": "assets/logos/synvert-xgeeks-navy.png"},
+      {"name": "Riskified", "logo": "assets/logos/riskified.png"}
+    ],
+    "partners": [
+      {"name": "AI Lisbon", "logo": "assets/logos/ai-lisbon.png"},
+      {"name": "ai.pt", "logo": "assets/logos/ai-pt.png"}
+    ],
+    "thanks": "A huge thank you to our sponsors and partners for making this meetup possible!"
+  },
+  "we_are": {
+    "kicker": "WE'RE",
+    "logo": "assets/logos/synvert-xgeeks-white.png",
+    "part_of": "PART OF",
+    "globallogic_logo": "assets/logos/globallogic.png"
+  },
+  "accelerate": {
+    "headline": "Accelerating enterprise success with AI and Cloud Native",
+    "subhead": "By making the promise of DevOps and AI impact a reality",
+    "badge": "A GlobalLogic Company",
+    "icon": "assets/icons/rocket-laptop.png"
+  },
+  "people": {
+    "kicker": "$ kubectl apply -f ./people.yaml",
+    "stats": [
+      {"value": "100+", "label": "People"},
+      {"value": "3", "label": "Locations"},
+      {"value": "Top 50", "label": "Teamlyzer"},
+      {"value": "9.1", "label": "Employee NPS"}
+    ],
+    "photo": "assets/photos/team.jpg",
+    "icon": "assets/icons/astronaut-helmet.png"
+  },
+  "expertise": {
+    "kicker": "$ kubectl apply -f ./expertise.yaml",
+    "areas": ["Cloud Native Applications", "Platform Engineering", "AI Engineering"],
+    "icon": "assets/icons/lightbulb-planet.png"
+  },
+  "clients": {
+    "kicker": "$ kubectl apply -f ./clients.yaml",
+    "icon": "assets/icons/hand-planet.png",
+    "logos": [
+      {"file": "mercedes-benz.png", "scale": 1.5}, "bmw.png", {"file": "telekom.png", "scale": 0.55},
+      "tblx.png", "american-tower.png", "lichtblick.png",
+      "salsify.png", "coverflex.png", "datacamp.png", "putzmeister.png", {"file": "mbition.png", "scale": 1.3},
+      "hitachi.png", "helvetia.png", "die-continentale.png", {"file": "cjr-renewables.png", "dark": true}, "omip.png"
+    ]
+  },
+  "communities": {
+    "kicker": "$ kubectl apply -f ./community.yaml",
+    "tagline": "synvert xgeeks acts as a driving force in tech ecosystems, helping to grow and connect communities.",
+    "icon": "assets/icons/binoculars.png",
+    "highlight": "Lisbon GenAI Community",
+    "items": [
+      {"name": "Lisbon GenAI Community", "logo": "lisbon-genai-community.png", "logo_dark": "lisbon-genai-black.png"},
+      {"name": "Leiria Tech Talks", "logo": "leiria-tech-talks.png"},
+      {"name": "Viseu Tech Talks", "logo": "viseu-tech-talks.png"},
+      {"name": "AWS User Group Porto", "logo": "aws-user-group-porto.png"},
+      {"name": "Cloud Native Lisbon", "logo": "cloud-native-lisbon.png"},
+      {"name": "Cloud Native Porto", "logo": "cloud-native-porto.png"},
+      {"name": "DevOps Braga", "logo": "devops-braga.png"},
+      {"name": "LeadDev Meetup - Lisbon", "logo": "leaddev-meetup-lisbon.png"},
+      {"name": "DevOps Lisbon", "logo": "devops-lisbon.png"}
+    ]
+  },
+  "kcd": {
+    "title": "KCD Porto 2026",
+    "lockup": "assets/logos/kcd-porto-devopsdays.jpg",
+    "event_name": "KCD Porto x DevOps Days Portugal",
+    "when_where": "Nov 19-20 | Super Bock Arena",
+    "hashtag": "#Kubernetes Community Days",
+    "keynotes_label": "Keynote speakers",
+    "keynotes": [
+      "assets/photos/kcd-keynote-1.jpg", "assets/photos/kcd-keynote-2.jpg",
+      "assets/photos/kcd-keynote-3.jpg", "assets/photos/kcd-keynote-4.jpg"
+    ],
+    "url": "https://community2.cncf.io/events/details/cncf-kcd-porto-presents-kcd-porto-2026-collab-with-devops-days-portugal/",
+    "qr_label": "Scan for tickets & info",
+    "discount_label": "10% discount",
+    "code_label": "Use code",
+    "discount_code": "cnpdevopsdiscount",
+    "colors": {
+      "bg": "#F1EFFE",
+      "title": "#303080",
+      "ink": "#0A0A43",
+      "blue": "#1715D7",
+      "deep": "#14068D",
+      "light": "#BFD1E6",
+      "muted": "#5B5A9C"
+    }
+  },
+  "talk_with_us": {
+    "kicker": "Talk with us",
+    "headline": "Being community-driven is part of our DNA",
+    "url": "https://linktr.ee/xgeeks",
+    "panel_shape": "assets/icons/talk-panel-shape.png",
+    "panel": {"x": 0.55, "y": 0.8, "w": 10.25},
+    "items": [
+      {"icon": "assets/icons/microphone.png", "label": "Call for Collaboration"},
+      {"icon": "assets/icons/slack.png", "label": "Slack channels"},
+      {"icon": "assets/icons/meetup.png", "label": "Meetup Groups"}
+    ],
+    "illustration": "assets/icons/community-people.png",
+    "site": "xgeeks.com",
+    "socials": [
+      {"icon": "assets/icons/youtube.png", "handle": "xgeeksio"},
+      {"icon": "assets/icons/instagram.png", "handle": "@xgeeks"},
+      {"icon": "assets/icons/linkedin.png", "handle": "xgeeks"},
+      {"icon": "assets/icons/x.png", "handle": "xgeeksio"}
+    ]
+  },
+  "closing": {
+    "text": "Thanks again to our meetup sponsors",
+    "logo": "assets/logos/riskified.png"
+  }
+}

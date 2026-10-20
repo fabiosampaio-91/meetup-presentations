@@ -19,7 +19,7 @@ TOOLS_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS_DIR))
 from build_deck import (  # noqa: E402
     Canvas, Run, SLIDE_W, SLIDE_H,
-    convert_pdf_libreoffice, print_pdf_chrome, pdf_info, render_previews, screenshot_web,
+    convert_pdf_libreoffice, print_pdf_chrome, pdf_info, brand_font_embedded, render_previews, screenshot_web,
     publish_docs, CHROME,
 )
 
@@ -264,7 +264,7 @@ def main():
     shutil.copy2(pdf_path, lo_check)
     render_previews(lo_check, preview, prefix="pptx")
     engine = "libreoffice"
-    if not any(brand_font.lower() in f.lower() for f in lo_fonts):
+    if not brand_font_embedded(brand_font, lo_fonts):
         engine = "chrome"
         print_pdf_chrome(html_path, pdf_path)
     pages, fonts = pdf_info(pdf_path)

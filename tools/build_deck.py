@@ -761,6 +761,18 @@ def print_pdf_chrome(html: Path, out: Path):
     assert out.exists(), "Chrome PDF print failed"
 
 
+def brand_font_embedded(brand_font: str, fonts) -> bool:
+    """True if the PDF embeds the brand font in a real text weight.
+
+    A user-installed *variable* font (e.g. Montserrat[wght].ttf) is visible to LibreOffice but it
+    only embeds the default instance ("Montserrat-Thin") and fakes the other weights, so a bare
+    name match is not enough: require a Regular/Medium/SemiBold/Bold face.
+    """
+    bf = brand_font.lower()
+    return any(bf in f.lower() and any(w in f.lower() for w in ("regular", "medium", "semibold", "bold"))
+               for f in fonts)
+
+
 def pdf_info(pdf: Path):
     import pymupdf
     doc = pymupdf.open(pdf)
@@ -862,7 +874,7 @@ def main():
     shutil.copy2(pdf_path, lo_check)
     render_previews(lo_check, preview, prefix="pptx")
     engine = "libreoffice"
-    if not any(brand_font.lower() in f.lower() for f in lo_fonts):
+    if not brand_font_embedded(brand_font, lo_fonts):
         # LibreOffice could not see the brand font (macOS user-font service): print the web deck instead.
         engine = "chrome"
         print_pdf_chrome(html_path, pdf_path)
