@@ -5,15 +5,16 @@ Multi-community meetup night deck builder (Cloud Native Porto x AWS UG Porto x .
 Usage:  python3 tools/build_cnp_deck.py "Cloud Native Porto Presentations/<dated folder>" [--no-publish]
 
 The Lisbon GenAI deck (build_genai_deck.py) without the synvert xgeeks company slides, re-skinned
-with the meetup banner (vertical blue -> cyan gradient, white cards with the black outline and hard
-shadow, blue name pills) and with two slides per hosting community:
+with the meetup banners (white cards with the black outline and hard shadow, tab + pill titles):
 
-  1 banner  2..2k  per community: "What About <Community>" + leadership team
+  1 cover: the co-hosting communities' banners side by side ("a three-community night")
+  then per community: "What About <Community>" (+ its leadership team when `team` is given), each in
+  that community's own banner colours (`theme`: gradient background, accent, title highlight, pill)
   then  sponsors & partners  ·  KCD (in KCD Porto colours)  ·  agenda  ·  one slide per sponsor
   (the last one is the hand-over to tonight's host)
 
-Same Canvas/backends/PDF/preview/publish pipeline as build_deck.py; the slide background is
-generated here from brand.gradient into assets/derived/.
+Same Canvas/backends/PDF/preview/publish pipeline as build_deck.py; every gradient background is
+generated here from its sampled stops into assets/derived/.
 """
 from __future__ import annotations
 import json, shutil, sys
@@ -35,22 +36,44 @@ MARGIN = 0.6
 
 
 def total_slides(d):
-    return 1 + 2 * len(d["communities"]) + 3 + len(d["sponsor_slides"])
+    return 1 + sum(2 if g.get("team") else 1 for g in d["communities"]) + 3 + len(d["sponsor_slides"])
 
 
 # ----------------------------------------------------------------------------- generated brand images
 
-def ensure_background(deck, mdir: Path):
-    """Banner background: a linear top-to-bottom gradient between the sampled stops."""
-    b = deck["brand"]
-    out = mdir / b["background"]
+def hex_rgb(h):
+    return [int(h[i:i + 2], 16) for i in (1, 3, 5)]
+
+
+def gradient(stops, direction=(0, 1), w=2400, h=1350):
+    """Linear gradient between sampled banner stops along `direction` (dx, dy in slide-width/height units)."""
+    dx, dy = direction
+    x = np.linspace(0, 1, w, dtype=np.float32)[None, :]
+    y = np.linspace(0, 1, h, dtype=np.float32)[:, None]
+    t = (x * dx + y * dy) / (dx + dy)
+    pos = [s_[0] for s_ in stops]
+    cols = np.array([hex_rgb(s_[1]) for s_ in stops], np.float32)
+    return np.stack([np.interp(t, pos, cols[:, k]) for k in range(3)], axis=-1)
+
+
+def save_rgb(arr, out: Path):
     out.parent.mkdir(parents=True, exist_ok=True)
-    w, h = 2400, 1350
-    pos = [s[0] for s in b["gradient"]]
-    cols = np.array([[int(s[1][i:i + 2], 16) for i in (1, 3, 5)] for s in b["gradient"]], np.float32)
-    t = np.linspace(0, 1, h, dtype=np.float32)
-    col = np.stack([np.interp(t, pos, cols[:, k]) for k in range(3)], axis=-1)
-    Image.fromarray(np.repeat(col[:, None, :], w, axis=1).astype(np.uint8), "RGB").save(out, quality=92)
+    Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGB").save(out, quality=92)
+
+
+def ensure_backgrounds(deck, mdir: Path):
+    b = deck["brand"]
+    save_rgb(gradient(b["gradient"]), mdir / b["background"])
+    for g in deck["communities"]:
+        th = g.get("theme")
+        if th:
+            save_rgb(gradient(th["gradient"], th.get("direction", (0, 1))), mdir / th["background"])
+    cv = deck["cover"]
+    # the communities' colours left to right, fading into the night at the bottom (white headline)
+    top = gradient(cv["gradient"], (1, 0))
+    fade = np.clip((np.linspace(0, 1, top.shape[0], dtype=np.float32) - cv["fade"][0]) / (cv["fade"][1] - cv["fade"][0]), 0, 1)
+    fade = (fade * fade * (3 - 2 * fade))[:, None, None] * cv["fade"][2]
+    save_rgb(top * (1 - fade) + np.array(hex_rgb(cv["night"]), np.float32) * fade, mdir / cv["background"])
 
 
 # ----------------------------------------------------------------------------- design language
@@ -76,6 +99,15 @@ def avatar(c, path, x, y, dia):
     c.image(path, x, y, dia, dia, fit="cover", radius=dia / 2)
 
 
+def themed_slide(c, mdir, th):
+    """New slide on the community's own banner background (or the deck's, without a theme)."""
+    if th:
+        c.new_slide(bg=None)
+        c.image(mdir / th["background"], 0, 0, SLIDE_W, SLIDE_H, fit="fill")
+    else:
+        c.new_slide()
+
+
 # ----------------------------------------------------------------------------- slides
 
 def draw_deck(c: Canvas, d: dict, mdir: Path):
@@ -83,14 +115,37 @@ def draw_deck(c: Canvas, d: dict, mdir: Path):
     P = lambda p: mdir / p  # noqa: E731
     total = total_slides(d)
 
-    # ------------------------------------------------------------- 1. BANNER (as published)
+    # --------------------------------------------- 1. COVER: the three banners, one night
+    cv = d["cover"]
     c.new_slide(bg=None)
-    c.image(P(d["banner"]), 0, 0, SLIDE_W, SLIDE_H, fit="fill")
+    c.image(P(cv["background"]), 0, 0, SLIDE_W, SLIDE_H, fit="fill")
+    title_pill(c, [Run(cv["kicker"], 700, C["white"])], y=0.6)
+    c.pill(SLIDE_W - MARGIN, 0.6, 0.8, cv["date_line"], C["white"], C["black"], 20, 700, align="right")
+    bn = cv["banners"]
+    gap = 0.27
+    bw = (SLIDE_W - 2 * MARGIN - gap * (len(bn) - 1)) / len(bn)
+    by = 1.95
+    for i, b in enumerate(bn):
+        im = Image.open(P(b["image"]))
+        bh = bw * im.height / im.width
+        x = MARGIN + i * (bw + gap)
+        c.rect(x + 0.09, by + 0.09, bw, bh, C["black"], radius=0.12)
+        c.image(P(b["image"]), x, by, bw, bh, fit="cover", radius=0.12)
+        c.rect(x, by, bw, bh, None, 0.12, C["black"], 2.5)
+        c.pill(x + bw / 2, by + bh + 0.3, 0.5, b["label"], b["pill"], b.get("pill_fg", C["white"]), 15, 700, align="center")
+    c.text(MARGIN, 5.2, SLIDE_W - 2 * MARGIN, 1.0, cv["headline"], 50, C["white"], 700, "center", "middle")
+    c.text(MARGIN, 6.2, SLIDE_W - 2 * MARGIN, 0.5, cv["subline"], 17, cv.get("subline_color", C["white"]), 600,
+           "center", "middle")
 
     for g in d["communities"]:
+        th = g.get("theme") or {}
+        accent = th.get("accent", C["blue"])
+        hl = th.get("highlight", C["cyan"])
+        badge_bg = th.get("pill", C["blue"])
+        foot = th.get("footer")
         # ------------------------------------------------------- WHAT ABOUT <COMMUNITY>
-        c.new_slide()
-        title_pill(c, [Run("What About ", 700, C["white"]), Run(g["name"], 700, C["cyan"])])
+        themed_slide(c, mdir, th)
+        title_pill(c, [Run("What About ", 700, C["white"]), Run(g["name"], 700, hl)])
         hx, hy, hw, hh = MARGIN, 1.85, 4.55, 4.9
         c.card(hx, hy, hw, hh, framed=True)
         c.image(P(g["visual"]), hx + 0.3, hy + 0.3, hw - 0.6, 2.75)
@@ -106,7 +161,7 @@ def draw_deck(c: Canvas, d: dict, mdir: Path):
             r, k = divmod(i, 2)
             x, y = x0 + k * (tile_w + gap), 1.85 + r * (tile_h + row_gap)
             c.card(x, y, tile_w, tile_h, framed=True)
-            c.text(x + 0.3, y + 0.1, tile_w - 0.6, 0.68, s["value"], 30, C["blue"], 700, valign="middle", check=False)
+            c.text(x + 0.3, y + 0.1, tile_w - 0.6, 0.68, s["value"], 30, accent, 700, valign="middle", check=False)
             c.text(x + 0.3, y + 0.72, tile_w - 0.6, 0.4, s["label"], 12, C["muted_on_light"], 600, ls=1.0)
         y = 1.85 + 2 * tile_h + row_gap + 0.3
         h = 6.75 - y
@@ -114,27 +169,30 @@ def draw_deck(c: Canvas, d: dict, mdir: Path):
         c.text(x0 + 0.3, y + 0.15, cw - 0.6, h - 0.95, g["about"], 13.5, C["ink"], 600, ls=1.12)
         badge = g.get("badge")
         line_w = cw - 0.6 - (2.2 if badge else 0)
-        c.text(x0 + 0.3, y + h - 0.8, line_w, 0.66, g["sponsor_line"], 10.5, C["muted_on_light"], 500,
+        c.text(x0 + 0.3, y + h - 0.8, line_w, 0.66, g["note"], 10.5, C["muted_on_light"], 500,
                valign="middle", ls=1.05)
         if badge:
             c.image(P(badge["logo"]), x0 + cw - 2.2, y + h - 0.66, 1.9, 0.38, align="right")
-        footer(c, d, total)
+        footer(c, d, total, color=foot)
 
+        t = g.get("team")
+        if not t:
+            continue
         # ------------------------------------------------------------ LEADERSHIP TEAM
-        c.new_slide()
-        t = g["team"]
-        title_pill(c, [Run(g["name"], 700, C["cyan"]), Run(" " + t["title"], 700, C["white"])])
+        themed_slide(c, mdir, th)
+        title_pill(c, [Run(g["name"], 700, hl), Run(" " + t["title"], 700, C["white"])])
         people = t["people"]
         n, gap = len(people), 0.22
-        pw = (SLIDE_W - 2 * MARGIN - gap * (n - 1)) / n
+        pw = min(2.6, (SLIDE_W - 2 * MARGIN - gap * (n - 1)) / n)
+        px0 = (SLIDE_W - (n * pw + gap * (n - 1))) / 2
         for i, p in enumerate(people):
-            x, y, h = MARGIN + i * (pw + gap), 1.8, 3.3
+            x, y, h = px0 + i * (pw + gap), 1.8, 3.3
             c.card(x, y, pw, h, framed=True)
             dia = 1.4
             avatar(c, P(p["photo"]), x + (pw - dia) / 2, y + 0.3, dia)
             c.text(x + 0.12, y + 1.85, pw - 0.24, 0.72, p["name"], 15, C["black"], 700, "center", "middle", ls=1.0)
             if p.get("hosting"):
-                c.pill(x + pw / 2, y + 2.72, 0.36, t["host_badge"], C["blue"], C["white"], 10, 700, align="center")
+                c.pill(x + pw / 2, y + 2.72, 0.36, t["host_badge"], badge_bg, C["white"], 10, 700, align="center")
         cs = g["call_for_speakers"]
         y, h = 5.5, 1.3
         c.card(MARGIN, y, SLIDE_W - 2 * MARGIN, h, framed=True)
@@ -142,7 +200,7 @@ def draw_deck(c: Canvas, d: dict, mdir: Path):
         c.qr(cs["qr_name"], cs["url"], q, MARGIN + 0.12, y + (h - q) / 2)
         c.text(MARGIN + 1.45, y + 0.14, 9.0, 0.45, cs["title"], 17, C["black"], 700, valign="middle")
         c.text(MARGIN + 1.45, y + 0.58, 10.4, 0.6, cs["text"], 12, C["muted_on_light"], 500, ls=1.08)
-        footer(c, d, total)
+        footer(c, d, total, color=foot)
 
     # ------------------------------------------------------------------- SPONSORS & PARTNERS
     c.new_slide()
@@ -150,20 +208,23 @@ def draw_deck(c: Canvas, d: dict, mdir: Path):
     tw = c.m.width_in(sp["title"], 30, 700) + 0.8
     c.card(MARGIN, 0.45, tw, 0.95, framed=True)
     c.text(MARGIN + 0.35, 0.45, tw - 0.5, 0.95, sp["title"], 30, C["black"], 700, valign="middle")
-    sec_gap = 0.9
-    sec_w = (SLIDE_W - 2 * MARGIN - sec_gap) / 2
-    for si, (label, items) in enumerate(((sp["sponsors_label"], sp["sponsors"]), (sp["partners_label"], sp["partners"]))):
-        sx = MARGIN + si * (sec_w + sec_gap)
+    groups = ((sp["sponsors_label"], sp["sponsors"]), (sp["partners_label"], sp["partners"]))
+    sec_gap, gap = 0.7, 0.25
+    n_all = sum(len(items) for _, items in groups)
+    w = (SLIDE_W - 2 * MARGIN - sec_gap - gap * (n_all - len(groups))) / n_all     # one card width for both sections
+    sx = MARGIN
+    for si, (label, items) in enumerate(groups):
+        sec_w = len(items) * w + gap * (len(items) - 1)
         c.label(sx, 1.8, sec_w, label, color=C["black"])
-        n, gap = len(items), 0.3
-        w = (sec_w - gap * (n - 1)) / n
         for i, it in enumerate(items):
             x = sx + i * (w + gap)
             c.card(x, 2.2, w, 3.1, framed=True)
-            logo_fit(c, P(it["logo"]), x + 0.3, 2.45, w - 0.6, 1.75, area=1.25 * it.get("scale", 1.0))
-            c.rect(x + 0.3, 4.4, w - 0.6, 0.012, C["grey_line"], radius=0)
-            c.text(x + 0.2, 4.5, w - 0.4, 0.62, it["name"], 15, C["black"], 700, "center", "middle")
-    c.rect(MARGIN + sec_w + sec_gap / 2 - 0.01, 1.8, 0.02, 3.5, C["black"], radius=0)
+            logo_fit(c, P(it["logo"]), x + 0.2, 2.45, w - 0.4, 1.75, area=1.25 * it.get("scale", 1.0))
+            c.rect(x + 0.25, 4.4, w - 0.5, 0.012, C["grey_line"], radius=0)
+            c.text(x + 0.12, 4.5, w - 0.24, 0.62, it["name"], 14, C["black"], 700, "center", "middle", ls=1.0)
+        if si == 0:
+            c.rect(sx + sec_w + sec_gap / 2 - 0.01, 1.8, 0.02, 3.5, C["black"], radius=0)
+        sx += sec_w + sec_gap
     c.text(MARGIN + 0.4, 5.6, SLIDE_W - 2 * MARGIN - 0.8, 1.15, sp["thanks"], 16, C["black"], 600, "center", "middle", ls=1.12)
     footer(c, d, total)
 
@@ -248,7 +309,7 @@ def main():
     repo = mdir.parent.parent
     deck = json.loads((mdir / "deck.json").read_text(encoding="utf-8"))
     slug = deck["slug"]
-    ensure_background(deck, mdir)
+    ensure_backgrounds(deck, mdir)
     c = Canvas(deck, mdir)
     draw_deck(c, deck, mdir)
     pptx_path = mdir / f"{slug}.pptx"

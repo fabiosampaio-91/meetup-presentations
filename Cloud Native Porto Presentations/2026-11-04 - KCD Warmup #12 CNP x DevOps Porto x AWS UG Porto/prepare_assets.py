@@ -80,21 +80,16 @@ def circle_src(im, box=None, size=480):
     return im.crop((l, t, l + s, t + s)).resize((size, size), Image.LANCZOS)
 
 
-# --- 1. Banner (slide 1) -------------------------------------------------------------------
-# The chat export carries a 2-6 px black frame (left, right, bottom): cut it, then pad the
-# 1.905:1 banner to 16:9 by extending its own vertical gradient above and below, so the
-# banner fills the slide without cropping the cards (meetup.com's featured photo crops them).
-ban = Image.open(BANNER).convert("RGB").crop((4, 0, 3134, 1643))
-W, H = ban.size
-target_h = round(W * 9 / 16)
-pad_t = (target_h - H) // 2
-col = np.asarray(ban)[:, 40].astype(np.float32)               # pure-gradient column left of the cards
-slope = (col[-1] - col[0]) / (H - 1)
-rows = np.arange(-pad_t, target_h - pad_t, dtype=np.float32)[:, None]
-grad = np.clip(col[0] + rows * slope, 0, 255).astype(np.uint8)
-canvas = Image.fromarray(np.repeat(grad[:, None, :], W, axis=1), "RGB")
-canvas.paste(ban, (0, pad_t))
-canvas.save(A / "banner" / "kcd-warmup-12-banner.png")
+# --- 1. Banners (cover): the three co-hosts' banners for tonight ----------------------------
+# The chat exports carry a 2-6 px black frame (left, right, bottom): cut it. The cover shows each
+# banner ~3.9in wide, so 1600 px is plenty and keeps the self-contained web deck light.
+BANNERS = {"cnp": BANNER,
+           "aws": SRC / "banner" / "KCD warmup #8 AWS UG Porto banner (from chat).png",
+           "devops": SRC / "banner" / "KCD warmup #91 DevOps Porto banner (from chat).png"}
+for key, path in BANNERS.items():
+    ban = Image.open(path).convert("RGB").crop((4, 0, 3134, 1643))
+    ban.thumbnail((1600, 1600), Image.LANCZOS)
+    ban.save(A / "banner" / f"{key}-banner.jpg", quality=92)
 
 # --- 2. Logos ------------------------------------------------------------------------------
 media(VTT, "image1.png").save(A / "logos" / "synvert-xgeeks-navy.png")
@@ -112,12 +107,16 @@ Image.open(keys[0]).convert("RGB").crop((60, 52, 366, 210)).save(A / "logos" / "
 # Logos that only exist in the banner's logo strip: rebuilt crisp from their own inks.
 banner = Image.open(BANNER).convert("RGB")
 BANNER_LOGOS = {                       # box in banner px, ink colours sampled from the banner
-    "mc-digital.png": ((130, 215, 320, 275), ["#09CE64", "#172270"]),
-    "devops-porto.png": ((335, 195, 465, 290), ["#020202"]),
     "cncf.png": ((700, 215, 930, 270), ["#000000", "#0086FF", "#93EAFF"]),
 }
 for out_name, (box, inks) in BANNER_LOGOS.items():
     flat_logo_upscale(banner.crop(box), inks).save(A / "logos" / out_name)
+# MC Digital: the logo file sent in chat (352x174, cleaner than the banner strip), sharpened the same way
+flat_logo_upscale(Image.open(SRC / "logos" / "mc-digital (from chat).png"), ["#14CF6F", "#1C2771"], scale=4) \
+    .save(A / "logos" / "mc-digital.png")
+# DevOps Porto: the big mark on the hero card of their own #91 banner (650x440 px)
+devops_banner = Image.open(BANNERS["devops"]).convert("RGB")
+flat_logo_upscale(devops_banner.crop((300, 420, 950, 860)), ["#020202"], scale=3).save(A / "logos" / "devops-porto.png")
 
 # --- 3. Speakers (agenda), cropped from the banner's speaker cards --------------------------
 circle_src(banner, (1295, 240, 1765, 725)).save(A / "photos" / "victor-hugo-silva.jpg", quality=92)

@@ -2,14 +2,23 @@
   "slug": "2026-11-04-kcd-warmup-12-cnp-x-devops-porto-x-aws-ug-porto",
   "community": "Cloud Native Porto",
   "title": "KCD Warmup Meetup: #12 Cloud Native Porto x DevOps Porto x AWS UG Porto",
-  "description": "KCD Warmup Meetup deck (Nov 4th, Sonae Tech Hub): Cloud Native Porto and AWS User Group Porto, sponsors and community partners, KCD Porto 2026, agenda, and the hand-over to MC Digital.",
+  "description": "KCD Warmup Meetup deck (Nov 4th, Sonae Tech Hub): Cloud Native Porto, AWS User Group Porto and DevOps Porto, sponsors and community partners, KCD Porto 2026, agenda, and the hand-over to MC Digital.",
   "date_iso": "2026-11-04",
-  "footer": "KCD Warmup Meetup · #12 Cloud Native Porto × DevOps Porto × AWS UG Porto · Nov 4th",
+  "footer": "KCD Warmup Meetup · Cloud Native Porto × DevOps Porto × AWS UG Porto · Nov 4th",
   "brand": {
     "font": "Poppins",
     "background": "assets/derived/banner-gradient.jpg",
     "shadow_offset": 0.09,
-    "gradient": [[0.0, "#0185FE"], [1.0, "#42CAFF"]],
+    "gradient": [
+      [
+        0.0,
+        "#0185FE"
+      ],
+      [
+        1.0,
+        "#42CAFF"
+      ]
+    ],
     "colors": {
       "black": "#000000",
       "white": "#FFFFFF",
@@ -23,7 +32,52 @@
       "muted_on_dark": "#E6F4FF"
     }
   },
-  "banner": "assets/banner/kcd-warmup-12-banner.png",
+  "cover": {
+    "background": "assets/derived/cover-gradient.jpg",
+    "gradient": [
+      [
+        0.0,
+        "#7B5AC2"
+      ],
+      [
+        0.5,
+        "#0A8CFF"
+      ],
+      [
+        1.0,
+        "#7BD4C3"
+      ]
+    ],
+    "fade": [
+      0.35,
+      0.85,
+      0.94
+    ],
+    "night": "#0B0D18",
+    "kicker": "KCD Warmup Meetup",
+    "date_line": "Nov 4th | 6:30 PM | Tech Hub",
+    "banners": [
+      {
+        "image": "assets/banner/aws-banner.jpg",
+        "label": "AWS User Group Porto",
+        "pill": "#7B5AC2"
+      },
+      {
+        "image": "assets/banner/cnp-banner.jpg",
+        "label": "Cloud Native Porto",
+        "pill": "#0086FF"
+      },
+      {
+        "image": "assets/banner/devops-banner.jpg",
+        "label": "DevOps Porto",
+        "pill": "#7BD4C3",
+        "pill_fg": "#000000"
+      }
+    ],
+    "headline": "A three-community night",
+    "subline": "Warming up for KCD Porto × DevOpsDays Portugal · Nov 19–20 · Super Bock Arena",
+    "subline_color": "#DCE3F0"
+  },
   "communities": [
     {
       "name": "Cloud Native Porto",
@@ -33,24 +87,51 @@
       "join_short": "meetup.com/cloud-native-porto",
       "qr_name": "cnp-meetup",
       "stats": [
-        {"value": "433", "label": "members on Meetup"},
-        {"value": "4.68", "label": "rating on Meetup (38 ratings)"},
-        {"value": "6", "label": "organizers"},
-        {"value": "#12", "label": "meetup tonight · since Jan 2025"}
+        {
+          "value": "433",
+          "label": "members on Meetup"
+        },
+        {
+          "value": "4.68",
+          "label": "rating on Meetup (38 ratings)"
+        },
+        {
+          "value": "4",
+          "label": "organizers"
+        },
+        {
+          "value": "#12",
+          "label": "meetup tonight · since Jan 2025"
+        }
       ],
       "about": "Rooted in Porto, our mission is to foster collaboration, knowledge sharing and innovation around Kubernetes, Docker, CI/CD, Observability and the broader CNCF ecosystem.",
-      "sponsor_line": "Meetup after meetup, made possible by our long-standing sponsor, synvert xgeeks, a GlobalLogic company.",
-      "badge": {"logo": "assets/logos/cncf.png"},
+      "badge": {
+        "logo": "assets/logos/cncf.png"
+      },
       "team": {
         "title": "Leadership Team",
         "host_badge": "Hosting tonight",
         "people": [
-          {"name": "Fábio Sampaio", "photo": "assets/photos/org-fabio-sampaio.png", "hosting": true},
-          {"name": "Hélia Barroso", "photo": "assets/photos/org-helia-barroso.png", "hosting": true},
-          {"name": "Paulo Dias", "photo": "assets/photos/org-paulo-dias.png", "hosting": true},
-          {"name": "Iris Dyrmishi", "photo": "assets/photos/org-iris-dyrmishi.png", "hosting": true},
-          {"name": "Luis Marques", "photo": "assets/photos/org-luis-marques.png"},
-          {"name": "Ivan Ferreira", "photo": "assets/photos/org-ivan-ferreira.png"}
+          {
+            "name": "Fábio Sampaio",
+            "photo": "assets/photos/org-fabio-sampaio.png",
+            "hosting": true
+          },
+          {
+            "name": "Hélia Barroso",
+            "photo": "assets/photos/org-helia-barroso.png",
+            "hosting": true
+          },
+          {
+            "name": "Paulo Dias",
+            "photo": "assets/photos/org-paulo-dias.png",
+            "hosting": true
+          },
+          {
+            "name": "Iris Dyrmishi",
+            "photo": "assets/photos/org-iris-dyrmishi.png",
+            "hosting": true
+          }
         ]
       },
       "call_for_speakers": {
@@ -58,7 +139,8 @@
         "text": "Want to share your Cloud Native experience with the community? We are always looking for speakers, both in person and remote.",
         "url": "https://docs.google.com/forms/d/e/1FAIpQLSdKIpo2gUiTgUz9GXdoQgtEwhT_EZZHFsy7yz56tEAFTgmyZQ/viewform",
         "qr_name": "cnp-speakers"
-      }
+      },
+      "note": "Meetup after meetup, made possible by our long-standing sponsor, synvert xgeeks, a GlobalLogic company."
     },
     {
       "name": "AWS User Group Porto",
@@ -68,22 +150,43 @@
       "join_short": "meetup.com/aws-porto-user-group",
       "qr_name": "aws-meetup",
       "stats": [
-        {"value": "402", "label": "members on Meetup"},
-        {"value": "4.82", "label": "rating on Meetup (17 ratings)"},
-        {"value": "5", "label": "organizers"},
-        {"value": "2016", "label": "founded in Porto"}
+        {
+          "value": "402",
+          "label": "members on Meetup"
+        },
+        {
+          "value": "4.82",
+          "label": "rating on Meetup (17 ratings)"
+        },
+        {
+          "value": "3",
+          "label": "organizers"
+        },
+        {
+          "value": "2016",
+          "label": "founded in Porto"
+        }
       ],
       "about": "Your community for AWS & Cloud Technology in Porto: cloud computing, DevOps, AI/ML, serverless, security and beyond. AWS UG Porto is all about learning, sharing and building together.",
-      "sponsor_line": "Meetup after meetup, made possible by our long-standing sponsor, synvert xgeeks, a GlobalLogic company.",
       "team": {
         "title": "Leadership Team",
         "host_badge": "Hosting tonight",
         "people": [
-          {"name": "Fábio Sampaio", "photo": "assets/photos/org-fabio-sampaio.png", "hosting": true},
-          {"name": "Gabriel Alves", "photo": "assets/photos/org-gabriel-alves.png", "hosting": true},
-          {"name": "Luiz Rodrigues", "photo": "assets/photos/org-luiz-rodrigues.png", "hosting": true},
-          {"name": "Tiago Rodrigues", "photo": "assets/photos/org-tiago-rodrigues.png"},
-          {"name": "Ivan Ferreira", "photo": "assets/photos/org-ivan-ferreira.png"}
+          {
+            "name": "Fábio Sampaio",
+            "photo": "assets/photos/org-fabio-sampaio.png",
+            "hosting": true
+          },
+          {
+            "name": "Gabriel Alves",
+            "photo": "assets/photos/org-gabriel-alves.png",
+            "hosting": true
+          },
+          {
+            "name": "Luiz Rodrigues",
+            "photo": "assets/photos/org-luiz-rodrigues.png",
+            "hosting": true
+          }
         ]
       },
       "call_for_speakers": {
@@ -91,6 +194,165 @@
         "text": "Want to share your expertise? Become a speaker at an upcoming event and contribute to the community!",
         "url": "https://forms.gle/u2Ya33eN36RLdBvz7",
         "qr_name": "aws-speakers"
+      },
+      "note": "Meetup after meetup, made possible by our long-standing sponsor, synvert xgeeks, a GlobalLogic company.",
+      "theme": {
+        "background": "assets/derived/aws-gradient.jpg",
+        "direction": [
+          1,
+          0.39
+        ],
+        "gradient": [
+          [
+            0.0,
+            "#141C31"
+          ],
+          [
+            0.072,
+            "#141C31"
+          ],
+          [
+            0.137,
+            "#252150"
+          ],
+          [
+            0.209,
+            "#3A2C6F"
+          ],
+          [
+            0.281,
+            "#4D3788"
+          ],
+          [
+            0.345,
+            "#543B90"
+          ],
+          [
+            0.417,
+            "#6548A5"
+          ],
+          [
+            0.482,
+            "#7656BB"
+          ],
+          [
+            0.554,
+            "#7A59C1"
+          ],
+          [
+            0.65,
+            "#7B5AC2"
+          ],
+          [
+            1.0,
+            "#7B5AC2"
+          ]
+        ],
+        "accent": "#6A49B8",
+        "highlight": "#B39CF2",
+        "pill": "#45307F",
+        "footer": "#EDE9F7"
+      }
+    },
+    {
+      "name": "DevOps Porto",
+      "visual": "assets/logos/devops-porto.png",
+      "join_url": "https://www.meetup.com/devopsporto/",
+      "join_label": "Join us on Meetup",
+      "join_short": "meetup.com/devopsporto",
+      "qr_name": "devops-meetup",
+      "stats": [
+        {
+          "value": "3,550",
+          "label": "members on Meetup"
+        },
+        {
+          "value": "4.65",
+          "label": "rating on Meetup (619 ratings)"
+        },
+        {
+          "value": "90+",
+          "label": "meetups since July 2016"
+        },
+        {
+          "value": "9",
+          "label": "organizers"
+        }
+      ],
+      "about": "A community for everyone interested in reducing the pain of software delivery and in building “bridges” between development and operations.",
+      "note": "More about the group at devopsporto.com · Slack: devopsporto.slack.com",
+      "theme": {
+        "background": "assets/derived/devops-gradient.jpg",
+        "direction": [
+          0,
+          1
+        ],
+        "gradient": [
+          [
+            0.0,
+            "#7BD4C3"
+          ],
+          [
+            0.073,
+            "#74C9B9"
+          ],
+          [
+            0.146,
+            "#64AFA1"
+          ],
+          [
+            0.219,
+            "#549589"
+          ],
+          [
+            0.292,
+            "#447A70"
+          ],
+          [
+            0.365,
+            "#356158"
+          ],
+          [
+            0.438,
+            "#254640"
+          ],
+          [
+            0.511,
+            "#17302B"
+          ],
+          [
+            0.584,
+            "#132925"
+          ],
+          [
+            0.657,
+            "#112320"
+          ],
+          [
+            0.73,
+            "#0E1D1B"
+          ],
+          [
+            0.8,
+            "#0B1614"
+          ],
+          [
+            0.876,
+            "#07100E"
+          ],
+          [
+            0.95,
+            "#040908"
+          ],
+          [
+            1.0,
+            "#020303"
+          ]
+        ],
+        "accent": "#0E7C69",
+        "highlight": "#7BD4C3",
+        "pill": "#000000",
+        "footer": "#CFEDE7"
       }
     }
   ],
@@ -99,12 +361,30 @@
     "sponsors_label": "Sponsors",
     "partners_label": "Community Partners",
     "sponsors": [
-      {"name": "MC Digital", "logo": "assets/logos/mc-digital.png"},
-      {"name": "synvert xgeeks", "logo": "assets/logos/synvert-xgeeks-navy.png"}
+      {
+        "name": "MC Digital",
+        "logo": "assets/logos/mc-digital.png"
+      },
+      {
+        "name": "synvert xgeeks",
+        "logo": "assets/logos/synvert-xgeeks-navy.png"
+      }
     ],
     "partners": [
-      {"name": "DevOps Porto", "logo": "assets/logos/devops-porto.png", "scale": 1.15},
-      {"name": "AWS User Group Porto", "logo": "assets/logos/aws-ug-porto.jpg", "scale": 1.9}
+      {
+        "name": "Cloud Native Porto",
+        "logo": "assets/logos/cloud-native-porto.png"
+      },
+      {
+        "name": "AWS User Group Porto",
+        "logo": "assets/logos/aws-ug-porto.jpg",
+        "scale": 1.9
+      },
+      {
+        "name": "DevOps Porto",
+        "logo": "assets/logos/devops-porto.png",
+        "scale": 1.15
+      }
     ],
     "thanks": "A huge thanks to MC Digital for hosting and supporting this edition, to synvert xgeeks for the ongoing support, and to DevOps Porto and AWS UG Porto for making this a three-community night."
   },
@@ -117,8 +397,10 @@
     "hashtag": "#Kubernetes Community Days",
     "keynotes_label": "Keynote speakers",
     "keynotes": [
-      "assets/photos/kcd-keynote-1.jpg", "assets/photos/kcd-keynote-2.jpg",
-      "assets/photos/kcd-keynote-3.jpg", "assets/photos/kcd-keynote-4.jpg"
+      "assets/photos/kcd-keynote-1.jpg",
+      "assets/photos/kcd-keynote-2.jpg",
+      "assets/photos/kcd-keynote-3.jpg",
+      "assets/photos/kcd-keynote-4.jpg"
     ],
     "url": "https://community2.cncf.io/events/details/cncf-kcd-porto-presents-kcd-porto-2026-collab-with-devops-days-portugal/",
     "qr_label": "Scan for tickets & info",
@@ -138,19 +420,36 @@
   "agenda": {
     "title": "Agenda",
     "items": [
-      {"time": "18:30", "what": "Check-in & Networking"},
-      {"time": "19:00", "what": "Welcome & Intros"},
+      {
+        "time": "18:30",
+        "what": "Check-in & Networking"
+      },
+      {
+        "time": "19:00",
+        "what": "Welcome & Intros"
+      },
       {
         "time": "19:10",
         "what": "What “Cloud Native” actually means for a service at MC Digital, and the golden rules and paved road we are building to get there",
-        "speaker": {"name": "Victor Hugo Silva", "role": "Principal Technical Architect @ MC Digital", "photo": "assets/photos/victor-hugo-silva.jpg"}
+        "speaker": {
+          "name": "Victor Hugo Silva",
+          "role": "Principal Technical Architect @ MC Digital",
+          "photo": "assets/photos/victor-hugo-silva.jpg"
+        }
       },
       {
         "time": "19:45",
         "what": "Governing the Ungovernable: Leveraging the Cloud to Secure the Cloud",
-        "speaker": {"name": "Chris Farris", "role": "AWS Security Hero & Owner @ PrimeHarbor Technologies", "photo": "assets/photos/chris-farris.jpg"}
+        "speaker": {
+          "name": "Chris Farris",
+          "role": "AWS Security Hero & Owner @ PrimeHarbor Technologies",
+          "photo": "assets/photos/chris-farris.jpg"
+        }
       },
-      {"time": "20:20", "what": "Food, drinks & networking"}
+      {
+        "time": "20:20",
+        "what": "Food, drinks & networking"
+      }
     ]
   },
   "sponsor_slides": [

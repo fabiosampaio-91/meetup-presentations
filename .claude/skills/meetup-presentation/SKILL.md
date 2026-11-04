@@ -243,16 +243,22 @@ First built for the KCD Warmup Meetup #12 CNP x DevOps Porto x AWS UG Porto (202
 `tools/build_cnp_deck.py` (same shared pipeline; imports `framed`/`logo_fit` from the GenAI builder).
 Use it when the user wants the GenAI-style night deck but **no synvert xgeeks company presentation**.
 
-- **Order**: 1 banner · per hosting community (list `communities[]` in deck.json): "What About
-  <Community>" (Meetup stats + About + join QR, optional badge like the CNCF logo) and its leadership
-  team ("Hosting tonight" = the event's `eventHosts` on that community's Meetup event; roles omitted
-  unless sourced; call-for-speakers QR from the group description) · Sponsors & Partners · KCD (KCD
-  colours) · Agenda (times from the event page, talk rows with speaker avatars cropped from the banner) ·
-  one slide per sponsor (`sponsor_slides[]`): synvert xgeeks (the user talks briefly over the logo), then
-  the venue host last = hand-over. Slide count is derived from deck.json.
+- **Order**: 1 cover = every co-host's banner side by side (black outline + hard shadow, a name pill in
+  each community's colour, "A three-community night" headline sourced from the event page) on a
+  gradient of the communities' colours fading to dark · per community (list `communities[]`): "What
+  About <Community>" (Meetup stats + About + join QR, optional badge like the CNCF logo) and, when `team`
+  is given, its leadership team ("Hosting tonight" = that community's own `eventHosts`; roles omitted
+  unless sourced; call-for-speakers QR from the group description) · Sponsors & Partners (all cards one
+  width; every co-hosting community in Community Partners) · KCD (KCD colours) · Agenda (times from the
+  event page, talk rows with speaker avatars cropped from a banner) · one slide per sponsor
+  (`sponsor_slides[]`): synvert xgeeks (the user talks briefly over the logo), then the venue host last =
+  hand-over. Slide count is derived from deck.json.
+- **Each community in its own colours**: `communities[].theme` = gradient stops sampled from that
+  community's banner (+ `direction`), accent (stat values), highlight (name in the title pill), pill
+  (host badge), footer colour. The lead community uses the deck's `brand` (no theme).
 - **Same event, several Meetup groups**: each co-hosting group publishes its own copy of the event with
-  its own edition number, hosts and "Community Partners" list. The lead community is the one the banner
-  numbers (#12 CNP): take sponsors/partners from *its* event page; take each community's hosts from
-  its own event page.
-- **Banner not 16:9**: pad it with its own extrapolated gradient (see that meetup's `prepare_assets.py`)
-  instead of cropping the cards; cut any black frame from chat/screenshot exports first.
+  its own edition number, banner, hosts and "Community Partners" list. Take sponsors/partners from the
+  lead community's page (the one the user calls the deck after) and each community's hosts from its own.
+- **The user's edits win over the Meetup counts**: when they drop organizers from the team slide, the
+  "organizers" stat follows the slide (say so in the report).
+- Chat-exported banners carry a 2-6 px black frame (left, right, bottom): crop it in `prepare_assets.py`.
