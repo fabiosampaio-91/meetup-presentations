@@ -163,8 +163,8 @@
           "label": "organizers"
         },
         {
-          "value": "2016",
-          "label": "founded in Porto"
+          "value": "8+1",
+          "label": "meetups since 2025 + AWS Community GameDay Europe"
         }
       ],
       "about": "Your community for AWS & Cloud Technology in Porto: cloud computing, DevOps, AI/ML, serverless, security and beyond. AWS UG Porto is all about learning, sharing and building together.",
@@ -416,6 +416,29 @@
       "light": "#BFD1E6",
       "muted": "#5B5A9C"
     }
+  },
+  "raffle": {
+    "title": "Raffle",
+    "url": "https://qrto.org/eSLHfi",
+    "url_label": "qrto.org/eSLHfi",
+    "qr_label": "Scan to enter the raffle",
+    "headline": "At the end of the meetup, we're raffling 3 tickets!",
+    "prizes": [
+      {
+        "image": "assets/logos/kcd-porto-devopsdays.jpg",
+        "count": "1 ticket",
+        "value": "worth €175",
+        "name": "KCD Porto × DevOps Days Portugal",
+        "details": "Nov 19–20 · Super Bock Arena"
+      },
+      {
+        "image": "assets/logos/pth-conference-2026.jpg",
+        "count": "2 tickets",
+        "name": "Porto Tech Hub Conference 2026",
+        "details": "Nov 10 · Alfândega do Porto"
+      }
+    ],
+    "instructions": "Scan the QR code and fill in the form to enter. The winners are drawn at the end of the meetup."
   },
   "agenda": {
     "title": "Agenda",

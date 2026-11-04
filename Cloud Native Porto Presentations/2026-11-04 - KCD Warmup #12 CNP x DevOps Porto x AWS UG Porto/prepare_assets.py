@@ -118,6 +118,11 @@ flat_logo_upscale(Image.open(SRC / "logos" / "mc-digital (from chat).png"), ["#1
 devops_banner = Image.open(BANNERS["devops"]).convert("RGB")
 flat_logo_upscale(devops_banner.crop((300, 420, 950, 860)), ["#020202"], scale=3).save(A / "logos" / "devops-porto.png")
 
+# PTH Conference 2026 key visual (portotechhub.com og:image), for the raffle prize card
+pth = Image.open(SRC / "raffle" / "pth-conference-2026 (portotechhub.com og image).png").convert("RGB")
+pth.thumbnail((1000, 1000), Image.LANCZOS)
+pth.save(A / "logos" / "pth-conference-2026.jpg", quality=92)
+
 # --- 3. Speakers (agenda), cropped from the banner's speaker cards --------------------------
 circle_src(banner, (1295, 240, 1765, 725)).save(A / "photos" / "victor-hugo-silva.jpg", quality=92)
 circle_src(banner, (1295, 915, 1765, 1400)).save(A / "photos" / "chris-farris.jpg", quality=92)

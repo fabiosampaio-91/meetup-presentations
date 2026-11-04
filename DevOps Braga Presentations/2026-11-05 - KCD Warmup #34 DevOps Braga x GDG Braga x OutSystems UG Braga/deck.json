@@ -220,6 +220,23 @@
       "muted": "#5B5A9C"
     }
   },
+  "raffle": {
+    "title": "Raffle",
+    "url": "https://qrto.org/eSLHfi",
+    "url_label": "qrto.org/eSLHfi",
+    "qr_label": "Scan to enter the raffle",
+    "headline": "At the end of the meetup, we're raffling a KCD Porto ticket worth €175!",
+    "prizes": [
+      {
+        "image": "assets/logos/kcd-porto-devopsdays.jpg",
+        "count": "1 ticket",
+        "value": "worth €175",
+        "name": "KCD Porto × DevOps Days Portugal",
+        "details": "Nov 19–20 · Super Bock Arena"
+      }
+    ],
+    "instructions": "Scan the QR code and fill in the form to enter. The winner is drawn at the end of the meetup."
+  },
   "agenda": {
     "title": "Agenda",
     "items": [

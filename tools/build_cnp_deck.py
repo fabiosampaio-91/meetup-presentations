@@ -11,7 +11,7 @@ with the meetup banners (white cards with the black outline and hard shadow, tab
     or the one banner of the night (`cover.banner`, already padded to 16:9)
   then per community: "What About <Community>" (+ its leadership team when `team` is given), each in
   that community's own banner colours (`theme`: gradient background, accent, title highlight, pill)
-  then  sponsors & partners  ·  KCD (in KCD Porto colours)  ·  agenda  ·  one slide per sponsor
+  then  sponsors & partners  ·  KCD (in KCD Porto colours)  ·  raffle (optional)  ·  agenda  ·  one slide per sponsor
   (the last one is the hand-over to tonight's host)
 
 Same Canvas/backends/PDF/preview/publish pipeline as build_deck.py; every gradient background is
@@ -37,7 +37,8 @@ MARGIN = 0.6
 
 
 def total_slides(d):
-    return 1 + sum(2 if g.get("team") else 1 for g in d["communities"]) + 3 + len(d["sponsor_slides"])
+    return (1 + sum(2 if g.get("team") else 1 for g in d["communities"]) + 3 + (1 if d.get("raffle") else 0)
+            + len(d["sponsor_slides"]))
 
 
 # ----------------------------------------------------------------------------- generated brand images
@@ -189,8 +190,8 @@ def draw_community(c, d, g, mdir, total):
         r, k = divmod(i, 2)
         x, y = x0 + k * (tile_w + gap), 1.85 + r * (tile_h + row_gap)
         c.card(x, y, tile_w, tile_h, framed=True)
-        c.text(x + 0.3, y + 0.1, tile_w - 0.6, 0.68, s["value"], 30, accent, 700, valign="middle", check=False)
-        c.text(x + 0.3, y + 0.72, tile_w - 0.6, 0.4, s["label"], 12, C["muted_on_light"], 600, ls=1.0)
+        c.text(x + 0.3, y + 0.06, tile_w - 0.6, 0.64, s["value"], 30, accent, 700, valign="middle", check=False)
+        c.text(x + 0.3, y + 0.66, tile_w - 0.6, 0.5, s["label"], 11.5, C["muted_on_light"], 600, ls=1.0)
     y = 1.85 + 2 * tile_h + row_gap + 0.3
     h = 6.75 - y
     c.card(x0, y, cw, h, framed=True)
@@ -290,6 +291,44 @@ def draw_tail(c, d, mdir, total):
     c.text(rx + 0.15, 5.02, rw - 0.3, 0.26, k["code_label"].upper(), 10, K["muted"], 700, "center", "middle", letter_spacing=1.2)
     c.pill(rx + rw / 2, 5.36, 0.56, k["discount_code"], K["blue"], C["white"], 16, 700, align="center", w=rw - 0.5)
     footer(c, d, total, color=K["ink"])
+
+    # ---------------------------------------------------------------------------- RAFFLE
+    rf = d.get("raffle")
+    if rf:
+        c.new_slide()
+        title_pill(c, [Run(rf["title"], 700, C.get("title_fg", C["white"]))], size=24)
+        lw = 7.3
+        prizes = rf["prizes"]
+        ph, pgap = (2.0, 0) if len(prizes) == 1 else (1.45, 0.2)
+        head_h, ins_h = 1.05, 0.65
+        block = head_h + 0.2 + len(prizes) * ph + (len(prizes) - 1) * pgap + 0.25 + ins_h
+        y = max(1.55, 1.6 + (5.25 - block) / 2)          # left column centred on the QR card
+        c.text(MARGIN, y, lw, head_h, rf["headline"], 26, on_bg, 700, ls=1.05, valign="middle")
+        y += head_h + 0.2
+        for pz in prizes:
+            c.card(MARGIN, y, lw, ph, framed=True)
+            im = Image.open(P(pz["image"]))
+            ih = min(ph - 0.36, 1.3)
+            iw = ih * im.width / im.height
+            c.image(P(pz["image"]), MARGIN + 0.2, y + (ph - ih) / 2, iw, ih, fit="cover", radius=0.12)
+            tx = MARGIN + 0.2 + iw + 0.3
+            tw = MARGIN + lw - 0.2 - tx
+            ty = y + (ph - 1.16) / 2
+            c.text(tx, ty, tw, 0.5, pz["count"], 24, C["blue"], 700, valign="middle", check=False)
+            if pz.get("value"):
+                c.pill(tx + c.m.width_in(pz["count"], 24, 700) + 0.2, ty + 0.06, 0.4, pz["value"], C["blue"], C["white"], 13, 700)
+            c.text(tx, ty + 0.52, tw, 0.36, pz["name"], 15, C["black"], 700, valign="middle")
+            c.text(tx, ty + 0.86, tw, 0.3, pz["details"], 12, C["muted_on_light"], 600, valign="middle")
+            y += ph + pgap
+        c.text(MARGIN, y - pgap + 0.25, lw, ins_h, rf["instructions"], 14, on_bg, 600, ls=1.1, valign="middle")
+        qx, qw = 8.2, SLIDE_W - MARGIN - 8.2
+        c.card(qx, 1.6, qw, 5.25, framed=True)
+        q = 3.85
+        c.qr("raffle", rf["url"], q, qx + (qw - q) / 2, 1.82)
+        c.text(qx + 0.15, 5.78, qw - 0.3, 0.45, rf["qr_label"], 16, C["black"], 700, "center", "middle")
+        c.text(qx + 0.15, 6.2, qw - 0.3, 0.38, rf["url_label"], 11.5, C["muted_on_light"], 500, "center", "middle",
+               link=rf["url"])
+        footer(c, d, total)
 
     # ---------------------------------------------------------------------------- AGENDA
     c.new_slide()
