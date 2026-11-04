@@ -1,0 +1,279 @@
+{
+  "slug": "2026-11-05-kcd-warmup-34-devops-braga-x-gdg-braga-x-outsystems-ug-braga",
+  "community": "DevOps Braga",
+  "title": "KCD Warmup Meetup: #34 DevOps Braga x GDG Braga x OutSystems UG Braga",
+  "description": "KCD Warmup Meetup deck (Nov 5th, OutSystems Braga): DevOps Braga, sponsors and community partners, KCD Porto 2026, agenda, and the hand-over to OutSystems.",
+  "date_iso": "2026-11-05",
+  "footer": "KCD Warmup Meetup · #34 DevOps Braga × GDG Braga × OutSystems UG Braga · Nov 5th",
+  "brand": {
+    "font": "Poppins",
+    "background": "assets/derived/banner-gradient.jpg",
+    "shadow_offset": 0.09,
+    "gradient": [
+      [
+        0.0,
+        "#142535"
+      ],
+      [
+        0.13,
+        "#142535"
+      ],
+      [
+        0.2,
+        "#182E45"
+      ],
+      [
+        0.27,
+        "#1B3654"
+      ],
+      [
+        0.33,
+        "#1E3D63"
+      ],
+      [
+        0.4,
+        "#20426D"
+      ],
+      [
+        0.47,
+        "#214471"
+      ],
+      [
+        0.54,
+        "#224776"
+      ],
+      [
+        0.6,
+        "#23497A"
+      ],
+      [
+        0.67,
+        "#244C7F"
+      ],
+      [
+        0.74,
+        "#254E83"
+      ],
+      [
+        0.8,
+        "#344C7C"
+      ],
+      [
+        0.87,
+        "#4B446A"
+      ],
+      [
+        0.94,
+        "#623D59"
+      ],
+      [
+        1.0,
+        "#74384D"
+      ]
+    ],
+    "colors": {
+      "black": "#000000",
+      "white": "#FFFFFF",
+      "ink": "#0A0A0A",
+      "navy": "#142535",
+      "blue": "#013E89",
+      "grey": "#D4D5D6",
+      "grey_line": "#DADDE0",
+      "muted_on_light": "#4A4A4A",
+      "muted_on_dark": "#E6ECF5",
+      "on_bg": "#FFFFFF",
+      "title_bg": "#FFFFFF",
+      "title_fg": "#142535",
+      "highlight": "#013E89"
+    }
+  },
+  "cover": {
+    "banner": "assets/banner/devops-braga-34-banner.png"
+  },
+  "communities": [
+    {
+      "name": "DevOps Braga",
+      "visual": "assets/logos/devops-braga.jpg",
+      "join_url": "https://www.meetup.com/devops-braga/",
+      "join_label": "Join us on Meetup",
+      "join_short": "meetup.com/devops-braga",
+      "qr_name": "devops-braga-meetup",
+      "stats": [
+        {
+          "value": "959",
+          "label": "members on Meetup"
+        },
+        {
+          "value": "4.68",
+          "label": "rating on Meetup (121 ratings)"
+        },
+        {
+          "value": "7",
+          "label": "organizers"
+        },
+        {
+          "value": "#34",
+          "label": "meetup tonight · since 2017"
+        }
+      ],
+      "about": "A community to discuss cloud, automation, sysadmin, security and cost control. Tonight: our final meetup of the year, and our warm-up for KCD Porto × DevOpsDays Portugal.",
+      "note": "Meetup after meetup, made possible by our long-standing sponsor, synvert xgeeks, a GlobalLogic company.",
+      "team": {
+        "title": "Leadership Team",
+        "host_badge": "Hosting tonight",
+        "people": [
+          {
+            "name": "Fernando Nogueira",
+            "photo": "assets/photos/org-fernando-nogueira.png"
+          },
+          {
+            "name": "Paulo Silva"
+          },
+          {
+            "name": "Ricardo Oliveira",
+            "photo": "assets/photos/org-ricardo-oliveira.png"
+          },
+          {
+            "name": "Diana Martins"
+          },
+          {
+            "name": "Fernando Gomes",
+            "photo": "assets/photos/org-fernando-gomes.png",
+            "hosting": true
+          },
+          {
+            "name": "Fábio Sampaio",
+            "photo": "assets/photos/org-fabio-sampaio.png",
+            "hosting": true
+          },
+          {
+            "name": "Ana Zagalo"
+          }
+        ]
+      },
+      "cta": {
+        "title": "Join us on Slack",
+        "text": "Join the DevOps Braga Slack workspace. Missed a talk? Past presentations are at slideshare.net/devopsbraga.",
+        "url": "https://join.slack.com/t/devopsbraga/shared_invite/zt-24fuywa1f-HdMn~gC29dGUECpopVwMzg",
+        "qr_name": "devops-braga-slack"
+      }
+    }
+  ],
+  "sponsors_partners": {
+    "title": "Sponsors & Partners",
+    "sponsors_label": "Sponsors",
+    "partners_label": "Community Partners",
+    "sponsors": [
+      {
+        "name": "OutSystems",
+        "logo": "assets/logos/outsystems.png"
+      },
+      {
+        "name": "synvert xgeeks",
+        "logo": "assets/logos/synvert-xgeeks-navy.png"
+      }
+    ],
+    "partners": [
+      {
+        "name": "DevOps Braga",
+        "logo": "assets/logos/devops-braga.jpg",
+        "scale": 1.5
+      },
+      {
+        "name": "GDG Braga",
+        "logo": "assets/logos/gdg.png",
+        "scale": 0.9
+      },
+      {
+        "name": "OutSystems User Group Braga",
+        "logo": "assets/logos/outsystems-user-groups.png"
+      }
+    ],
+    "thanks": "A huge thanks to OutSystems for hosting and supporting this edition, to synvert xgeeks for the ongoing support, and to GDG Braga and OutSystems UG Braga for making this collaboration happen!"
+  },
+  "kcd": {
+    "title": "KCD Porto 2026",
+    "warmup_note": "Tonight is the warm-up: 14 days to go!",
+    "lockup": "assets/logos/kcd-porto-devopsdays.jpg",
+    "event_name": "KCD Porto x DevOps Days Portugal",
+    "when_where": "Nov 19-20 | Super Bock Arena",
+    "hashtag": "#Kubernetes Community Days",
+    "keynotes_label": "Keynote speakers",
+    "keynotes": [
+      "assets/photos/kcd-keynote-1.jpg",
+      "assets/photos/kcd-keynote-2.jpg",
+      "assets/photos/kcd-keynote-3.jpg",
+      "assets/photos/kcd-keynote-4.jpg"
+    ],
+    "url": "https://community2.cncf.io/events/details/cncf-kcd-porto-presents-kcd-porto-2026-collab-with-devops-days-portugal/",
+    "qr_label": "Scan for tickets & info",
+    "discount_label": "10% discount",
+    "code_label": "Use code",
+    "discount_code": "cnpdevopsdiscount",
+    "colors": {
+      "bg": "#F1EFFE",
+      "title": "#303080",
+      "ink": "#0A0A43",
+      "blue": "#1715D7",
+      "deep": "#14068D",
+      "light": "#BFD1E6",
+      "muted": "#5B5A9C"
+    }
+  },
+  "agenda": {
+    "title": "Agenda",
+    "items": [
+      {
+        "time": "18:30",
+        "what": "Check-in & Networking"
+      },
+      {
+        "time": "19:00",
+        "what": "Welcome & Intros"
+      },
+      {
+        "time": "19:10",
+        "what": "Evolving Kubernetes for the AI Era",
+        "speaker": {
+          "name": "Antonio Ojea",
+          "role": "Senior Staff Software Engineer @ Google",
+          "photo": "assets/photos/antonio-ojea.jpg"
+        }
+      },
+      {
+        "time": "19:45",
+        "what": "Build for Everyone: UX, UI & Accessibility",
+        "speaker": {
+          "name": "Nuno Mendes",
+          "role": "UX Designer @ Glintt Global",
+          "photo": "assets/photos/nuno-mendes.jpg"
+        }
+      },
+      {
+        "time": "20:20",
+        "what": "Data AI Platform",
+        "speaker": {
+          "name": "Murilo Rosendo",
+          "role": "Senior Data Engineer @ synvert xgeeks",
+          "photo": "assets/photos/murilo-rosendo.jpg"
+        }
+      },
+      {
+        "time": "20:55",
+        "what": "Food, drinks & networking"
+      }
+    ]
+  },
+  "sponsor_slides": [
+    {
+      "text": "Meetup after meetup, made possible by our long-standing sponsor",
+      "logo": "assets/logos/synvert-xgeeks-navy.png",
+      "pill": "a GlobalLogic company"
+    },
+    {
+      "text": "A huge thanks to OutSystems for hosting and supporting this edition",
+      "logo": "assets/logos/outsystems.png",
+      "pill": "Tonight's host · OutSystems Braga"
+    }
+  ]
+}

@@ -134,7 +134,7 @@
           }
         ]
       },
-      "call_for_speakers": {
+      "cta": {
         "title": "Call for speakers",
         "text": "Want to share your Cloud Native experience with the community? We are always looking for speakers, both in person and remote.",
         "url": "https://docs.google.com/forms/d/e/1FAIpQLSdKIpo2gUiTgUz9GXdoQgtEwhT_EZZHFsy7yz56tEAFTgmyZQ/viewform",
@@ -189,7 +189,7 @@
           }
         ]
       },
-      "call_for_speakers": {
+      "cta": {
         "title": "Call for speakers",
         "text": "Want to share your expertise? Become a speaker at an upcoming event and contribute to the community!",
         "url": "https://forms.gle/u2Ya33eN36RLdBvz7",

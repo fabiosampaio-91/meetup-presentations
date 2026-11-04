@@ -262,3 +262,7 @@ Use it when the user wants the GenAI-style night deck but **no synvert xgeeks co
 - **The user's edits win over the Meetup counts**: when they drop organizers from the team slide, the
   "organizers" stat follows the slide (say so in the report).
 - Chat-exported banners carry a 2-6 px black frame (left, right, bottom): crop it in `prepare_assets.py`.
+- **One banner only** (e.g. DevOps Braga #34): `cover.banner` = that banner padded to 16:9 with its own
+  edge rows; no three-banner cover. **Dark banners**: set `brand.colors.on_bg` (text on the slide
+  background: labels, thanks, sponsor slides, footer), `title_bg`/`title_fg` (white title pills on dark)
+  and `highlight`. Organizers without a Meetup photo (or with a non-portrait one) get initials.
