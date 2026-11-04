@@ -220,7 +220,7 @@ def community_colours(c, g):
 
 
 def draw_year(c, d, g, mdir, total):
-    """The community's year so far: editions timeline + the themes of the talks, with example talks."""
+    """The community's year so far: editions timeline, the AWS topics (one card + talk each), partner topics."""
     C = c.C
     th, tfg, accent, hl, pill_bg, foot = community_colours(c, g)
     yr = g["year"]
@@ -237,19 +237,34 @@ def draw_year(c, d, g, mdir, total):
         c.text(x + 0.15, y + 0.06, cw - 0.3, 0.32, e["label"], 13, fg, 700, valign="middle")
         c.text(x + 0.15, y + 0.37, cw - 0.3, 0.24, e["when"], 10, C["white"] if now else C["black"], 600, valign="middle")
         c.text(x + 0.15, y + 0.61, cw - 0.3, 0.38, e["with"], 9, sub, 500, ls=1.0)      # up to two lines
-    themes = yr["themes"]
-    gap = 0.23
-    tw = (SLIDE_W - 2 * MARGIN - gap * (len(themes) - 1)) / len(themes)
-    for i, tm in enumerate(themes):
-        x, y, h = MARGIN + i * (tw + gap), 2.88, 4.0
+    # the AWS side of the year: one card per AWS topic, each with the talk that covered it
+    now_tag = yr.get("now_tag")
+    on_theme = C["white"]
+    c.label(MARGIN, 2.88, 8, yr["aws_label"], color=on_theme)
+    cards = yr["aws"]
+    gap = 0.25
+    tw = (SLIDE_W - 2 * MARGIN - gap * (len(cards) - 1)) / len(cards)
+    for i, tk in enumerate(cards):
+        x, y, h = MARGIN + i * (tw + gap), 3.22, 2.2
         c.card(x, y, tw, h, framed=True)
-        c.text(x + 0.2, y + 0.15, tw - 0.4, 0.62, tm["name"], 15, accent, 700, valign="middle", ls=1.0)
-        c.rect(x + 0.2, y + 0.84, tw - 0.4, 0.012, C["grey_line"], radius=0)
-        for j, tk in enumerate(tm["talks"]):
-            ty = y + 0.98 + j * 1.53
-            c.pill(x + 0.2, ty, 0.27, tk["tag"], accent if tk["tag"] == yr.get("now_tag") else pill_bg, C["white"], 9, 700)
-            c.text(x + 0.2, ty + 0.34, tw - 0.4, 0.76, tk["title"], 11.5, C["black"], 700, ls=1.0)
-            c.text(x + 0.2, ty + 1.1, tw - 0.4, 0.36, tk["by"], 9.5, C["muted_on_light"], 500, ls=1.0)
+        c.pill(x + 0.2, y + 0.16, 0.26, tk["tag"], accent if tk["tag"] == now_tag else pill_bg, C["white"], 9, 700)
+        c.text(x + 0.2, y + 0.44, tw - 0.4, 0.4, tk["heading"], 17, accent, 700, valign="middle")
+        c.text(x + 0.2, y + 0.84, tw - 0.4, 0.24, tk["sub"], 9.5, C["muted_on_light"], 600, valign="middle")
+        c.text(x + 0.2, y + 1.14, tw - 0.4, 0.68, tk["title"], 11.5, C["black"], 700, ls=1.0)
+        c.text(x + 0.2, y + 1.84, tw - 0.4, 0.26, tk["by"], 9.5, C["muted_on_light"], 500, valign="middle")
+    # ... and what the partner communities brought to the stage, as light topic chips on the background
+    c.label(MARGIN, 5.68, 8, yr["partners_label"], color=on_theme)
+    cx0, cx1 = MARGIN, SLIDE_W - MARGIN
+    cx, cy = cx0, 6.0
+    for tp in yr["partner_topics"]:
+        label = f'{tp["text"]} · {tp["tag"]}'
+        w = c.m.width_in(label, 10.5, 600) + 0.4
+        if cx + w > cx1:
+            cx, cy = cx0, cy + 0.44
+        c.pill(cx, cy, 0.34, label, C["white"], C["black"], 10.5, 600, w=w)
+        cx += w + 0.14
+    if cy + 0.34 > 6.95:
+        c.warnings.append(f"slide {c.n}: partner topic chips run into the footer")
     footer(c, d, total, color=foot)
 
 

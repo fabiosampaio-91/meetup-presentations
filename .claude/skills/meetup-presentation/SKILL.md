@@ -263,8 +263,10 @@ Use it when the user wants the GenAI-style night deck but **no synvert xgeeks co
   "organizers" stat follows the slide (say so in the report).
 - Chat-exported banners carry a 2-6 px black frame (left, right, bottom): crop it in `prepare_assets.py`.
 - **Year so far** (optional `communities[].year`, after that community's team slide): editions timeline
-  (this year's meetups + special events, partner communities, tonight highlighted) and 4 theme columns
-  with 2 example talks each (title, speaker · company, edition tag), all from the past event pages.
+  (this year's meetups + special events, partner communities, tonight highlighted), then "On the AWS
+  side": one card per community-technology topic (heading = the service/topic, e.g. Kiro, Amazon EKS,
+  EventBridge/Lambda; one talk each) and the partner-community talks as light topic chips. The user
+  wants it tied to the community's own technology and not crowded: no generic theme columns.
 - **Shared-builder refactors**: after touching `tools/build_cnp_deck.py`, rebuild every deck that uses
   it and pixel-diff each slide against the committed `preview/slide-XX.png`; a slide-count check missed
   a lost cover background once.

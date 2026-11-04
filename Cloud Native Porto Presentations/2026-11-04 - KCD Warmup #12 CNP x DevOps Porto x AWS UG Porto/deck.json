@@ -289,66 +289,62 @@
             "now": true
           }
         ],
-        "themes": [
+        "aws_label": "On the AWS side",
+        "aws": [
           {
-            "name": "AI-assisted engineering",
-            "talks": [
-              {
-                "tag": "#6 + #7",
-                "title": "Spec-Driven AI Development with Kiro",
-                "by": "Luiz Otávio Rodrigues · Kantar"
-              },
-              {
-                "tag": "#6 · Apr",
-                "title": "Shift AI: Real-World Patterns for AI-Augmented Incident Response",
-                "by": "João Aires · Mercedes-Benz.io"
-              }
-            ]
+            "heading": "Kiro",
+            "sub": "spec-driven AI development",
+            "tag": "#6 + #7",
+            "title": "Spec-Driven AI Development with Kiro",
+            "by": "Luiz Otávio Rodrigues · Kantar"
           },
           {
-            "name": "Kubernetes & Cloud Native",
-            "talks": [
-              {
-                "tag": "#6 · Apr",
-                "title": "Honey, the Audience Broke My App Running in EKS",
-                "by": "Jake Page · mirrord"
-              },
-              {
-                "tag": "Tonight",
-                "title": "What “Cloud Native” actually means for a service at MC Digital",
-                "by": "Victor Hugo Silva · MC Digital"
-              }
-            ]
+            "heading": "Amazon EKS",
+            "sub": "Kubernetes on AWS, debugged live",
+            "tag": "#6 · Apr",
+            "title": "Honey, the Audience Broke My App Running in EKS",
+            "by": "Jake Page · mirrord"
           },
           {
-            "name": "Platforms & cloud security",
-            "talks": [
-              {
-                "tag": "#5 · Feb",
-                "title": "Cloud Development Environments powering Project Performance",
-                "by": "César Meira & Marco Silva · Critical Manufacturing"
-              },
-              {
-                "tag": "Tonight",
-                "title": "Governing the Ungovernable: Leveraging the Cloud to Secure the Cloud",
-                "by": "Chris Farris · AWS Security Hero"
-              }
-            ]
+            "heading": "Event-driven",
+            "sub": "EventBridge · Lambda · S3 · SNS",
+            "tag": "#8 · Sep",
+            "title": "Building a Modern Event-Driven Data Platform with AWS & Snowflake",
+            "by": "Rafael Arruda · Best in Bi Solutions"
           },
           {
-            "name": "People & leadership",
-            "talks": [
-              {
-                "tag": "#5 · Feb",
-                "title": "Management is a Hard Job. That’s Why You Should Do It Like an Engineer",
-                "by": "William Mendes · Coralogix"
-              },
-              {
-                "tag": "#7 · May",
-                "title": "Clear Thinking Under Pressure: Practical Tools for Better Decisions",
-                "by": "Teresa Limpo"
-              }
-            ]
+            "heading": "Cloud security",
+            "sub": "security invariants, event-driven",
+            "tag": "Tonight",
+            "title": "Governing the Ungovernable: Leveraging the Cloud to Secure the Cloud",
+            "by": "Chris Farris · AWS Security Hero"
+          }
+        ],
+        "partners_label": "With our partner communities",
+        "partner_topics": [
+          {
+            "text": "Cloud development environments",
+            "tag": "#5"
+          },
+          {
+            "text": "Managing like an engineer",
+            "tag": "#5"
+          },
+          {
+            "text": "AI-augmented incident response",
+            "tag": "#6"
+          },
+          {
+            "text": "Clear thinking under pressure",
+            "tag": "#7"
+          },
+          {
+            "text": "Technical management in OutSystems",
+            "tag": "#8"
+          },
+          {
+            "text": "What “Cloud Native” actually means",
+            "tag": "tonight"
           }
         ]
       }
