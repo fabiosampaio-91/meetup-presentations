@@ -262,6 +262,12 @@ Use it when the user wants the GenAI-style night deck but **no synvert xgeeks co
 - **The user's edits win over the Meetup counts**: when they drop organizers from the team slide, the
   "organizers" stat follows the slide (say so in the report).
 - Chat-exported banners carry a 2-6 px black frame (left, right, bottom): crop it in `prepare_assets.py`.
+- **Year so far** (optional `communities[].year`, after that community's team slide): editions timeline
+  (this year's meetups + special events, partner communities, tonight highlighted) and 4 theme columns
+  with 2 example talks each (title, speaker · company, edition tag), all from the past event pages.
+- **Shared-builder refactors**: after touching `tools/build_cnp_deck.py`, rebuild every deck that uses
+  it and pixel-diff each slide against the committed `preview/slide-XX.png`; a slide-count check missed
+  a lost cover background once.
 - **Raffle** (optional `raffle`, after the KCD slide): headline, one framed card per prize (image +
   count + value pill + event/date/venue, from the user and the prize event's own site) and the form QR
   regenerated from the URL decoded out of the user's QR image (same payload, proper quiet zone).

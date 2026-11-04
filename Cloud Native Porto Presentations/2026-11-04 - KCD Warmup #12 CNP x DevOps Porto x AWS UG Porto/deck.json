@@ -252,6 +252,105 @@
         "highlight": "#B39CF2",
         "pill": "#45307F",
         "footer": "#EDE9F7"
+      },
+      "year": {
+        "title": "in 2026",
+        "now_tag": "Tonight",
+        "timeline": [
+          {
+            "label": "#5",
+            "when": "Feb 11 · Maia",
+            "with": "with CNP + DevOps Porto"
+          },
+          {
+            "label": "GameDay",
+            "when": "Mar 17 · Porto",
+            "with": "AWS Community GameDay Europe"
+          },
+          {
+            "label": "#6",
+            "when": "Apr 16 · Braga",
+            "with": "with DevOps Braga"
+          },
+          {
+            "label": "#7",
+            "when": "May 20 · Porto",
+            "with": "with DevOps Porto"
+          },
+          {
+            "label": "#8",
+            "when": "Sep 8 · Porto",
+            "with": "with OutSystems UG Porto"
+          },
+          {
+            "label": "Tonight",
+            "when": "Nov 4 · Maia",
+            "with": "with DevOps Porto + CNP",
+            "now": true
+          }
+        ],
+        "themes": [
+          {
+            "name": "AI-assisted engineering",
+            "talks": [
+              {
+                "tag": "#6 + #7",
+                "title": "Spec-Driven AI Development with Kiro",
+                "by": "Luiz Otávio Rodrigues · Kantar"
+              },
+              {
+                "tag": "#6 · Apr",
+                "title": "Shift AI: Real-World Patterns for AI-Augmented Incident Response",
+                "by": "João Aires · Mercedes-Benz.io"
+              }
+            ]
+          },
+          {
+            "name": "Kubernetes & Cloud Native",
+            "talks": [
+              {
+                "tag": "#6 · Apr",
+                "title": "Honey, the Audience Broke My App Running in EKS",
+                "by": "Jake Page · mirrord"
+              },
+              {
+                "tag": "Tonight",
+                "title": "What “Cloud Native” actually means for a service at MC Digital",
+                "by": "Victor Hugo Silva · MC Digital"
+              }
+            ]
+          },
+          {
+            "name": "Platforms & cloud security",
+            "talks": [
+              {
+                "tag": "#5 · Feb",
+                "title": "Cloud Development Environments powering Project Performance",
+                "by": "César Meira & Marco Silva · Critical Manufacturing"
+              },
+              {
+                "tag": "Tonight",
+                "title": "Governing the Ungovernable: Leveraging the Cloud to Secure the Cloud",
+                "by": "Chris Farris · AWS Security Hero"
+              }
+            ]
+          },
+          {
+            "name": "People & leadership",
+            "talks": [
+              {
+                "tag": "#5 · Feb",
+                "title": "Management is a Hard Job. That’s Why You Should Do It Like an Engineer",
+                "by": "William Mendes · Coralogix"
+              },
+              {
+                "tag": "#7 · May",
+                "title": "Clear Thinking Under Pressure: Practical Tools for Better Decisions",
+                "by": "Teresa Limpo"
+              }
+            ]
+          }
+        ]
       }
     },
     {

@@ -37,8 +37,8 @@ MARGIN = 0.6
 
 
 def total_slides(d):
-    return (1 + sum(2 if g.get("team") else 1 for g in d["communities"]) + 3 + (1 if d.get("raffle") else 0)
-            + len(d["sponsor_slides"]))
+    per_community = sum(1 + bool(g.get("team")) + bool(g.get("year")) for g in d["communities"])
+    return 1 + per_community + 3 + (1 if d.get("raffle") else 0) + len(d["sponsor_slides"])
 
 
 # ----------------------------------------------------------------------------- generated brand images
@@ -144,6 +144,7 @@ def draw_deck(c: Canvas, d: dict, mdir: Path):
 
 def draw_banners_cover(c, cv, P):
     C = c.C
+    c.image(P(cv["background"]), 0, 0, SLIDE_W, SLIDE_H, fit="fill")
     title_pill(c, [Run(cv["kicker"], 700, C.get("title_fg", C["white"]))], y=0.6)
     c.pill(SLIDE_W - MARGIN, 0.6, 0.8, cv["date_line"], C["white"], C["black"], 20, 700, align="right")
     bn = cv["banners"]
@@ -205,8 +206,58 @@ def draw_community(c, d, g, mdir, total):
     footer(c, d, total, color=foot)
 
     t = g.get("team")
-    if not t:
-        return
+    if t:
+        draw_team(c, d, g, mdir, total)
+    if g.get("year"):
+        draw_year(c, d, g, mdir, total)
+
+
+def community_colours(c, g):
+    C = c.C
+    th = g.get("theme") or {}
+    return (th, C.get("title_fg", C["white"]), th.get("accent", C["blue"]),
+            th.get("highlight", C.get("highlight", C.get("cyan"))), th.get("pill", C["blue"]), th.get("footer"))
+
+
+def draw_year(c, d, g, mdir, total):
+    """The community's year so far: editions timeline + the themes of the talks, with example talks."""
+    C = c.C
+    th, tfg, accent, hl, pill_bg, foot = community_colours(c, g)
+    yr = g["year"]
+    themed_slide(c, mdir, th)
+    title_pill(c, [Run(g["name"], 700, hl), Run(" " + yr["title"], 700, tfg)])
+    ev = yr["timeline"]
+    gap = 0.15
+    cw = (SLIDE_W - 2 * MARGIN - gap * (len(ev) - 1)) / len(ev)
+    for i, e in enumerate(ev):
+        x, y, h = MARGIN + i * (cw + gap), 1.6, 1.05
+        now = e.get("now")
+        framed(c, x, y, cw, h, accent if now else C["white"], C["black"], C["black"], radius=0.14, line_w=1.5)
+        fg, sub = (C["white"], C["white"]) if now else (accent, C["muted_on_light"])
+        c.text(x + 0.15, y + 0.06, cw - 0.3, 0.32, e["label"], 13, fg, 700, valign="middle")
+        c.text(x + 0.15, y + 0.37, cw - 0.3, 0.24, e["when"], 10, C["white"] if now else C["black"], 600, valign="middle")
+        c.text(x + 0.15, y + 0.61, cw - 0.3, 0.38, e["with"], 9, sub, 500, ls=1.0)      # up to two lines
+    themes = yr["themes"]
+    gap = 0.23
+    tw = (SLIDE_W - 2 * MARGIN - gap * (len(themes) - 1)) / len(themes)
+    for i, tm in enumerate(themes):
+        x, y, h = MARGIN + i * (tw + gap), 2.88, 4.0
+        c.card(x, y, tw, h, framed=True)
+        c.text(x + 0.2, y + 0.15, tw - 0.4, 0.62, tm["name"], 15, accent, 700, valign="middle", ls=1.0)
+        c.rect(x + 0.2, y + 0.84, tw - 0.4, 0.012, C["grey_line"], radius=0)
+        for j, tk in enumerate(tm["talks"]):
+            ty = y + 0.98 + j * 1.53
+            c.pill(x + 0.2, ty, 0.27, tk["tag"], accent if tk["tag"] == yr.get("now_tag") else pill_bg, C["white"], 9, 700)
+            c.text(x + 0.2, ty + 0.34, tw - 0.4, 0.76, tk["title"], 11.5, C["black"], 700, ls=1.0)
+            c.text(x + 0.2, ty + 1.1, tw - 0.4, 0.36, tk["by"], 9.5, C["muted_on_light"], 500, ls=1.0)
+    footer(c, d, total, color=foot)
+
+
+def draw_team(c, d, g, mdir, total):
+    C = c.C
+    P = lambda p: mdir / p  # noqa: E731
+    th, tfg, accent, hl, badge_bg, foot = community_colours(c, g)
+    t = g["team"]
     # ------------------------------------------------------------ LEADERSHIP TEAM
     themed_slide(c, mdir, th)
     title_pill(c, [Run(g["name"], 700, hl), Run(" " + t["title"], 700, tfg)])
